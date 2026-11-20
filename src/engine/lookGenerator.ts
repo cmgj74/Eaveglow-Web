@@ -17,10 +17,10 @@ interface GenerationRule {
 
 /** Which real WLED effects belong to each family, matched by name. */
 const FAMILY_KEYWORDS: Record<EffectFamily, string[]> = {
-  sparkle: ['sparkle', 'twinkle', 'glitter', 'candle', 'firework'],
-  flow: ['colorwaves', 'flow', 'stream', 'aurora', 'pacifica', 'scanner', 'sinelon', 'juggle', 'lake', 'ripple'],
+  sparkle: ['sparkle', 'twinkle', 'glitter', 'candle'],
+  flow: ['colorwaves', 'flow', 'stream', 'aurora', 'pacifica', 'sinelon', 'lake', 'ripple'],
   rain: ['rain', 'drip'],
-  solid: ['solid', 'breathe', 'fade', 'colorloop', 'blink', 'strobe', 'gradient'],
+  solid: ['solid', 'breathe', 'fade', 'colorloop', 'gradient'],
 };
 
 /** Default generation rules based on common naming patterns. */
@@ -42,7 +42,7 @@ export const DEFAULT_GENERATION_RULES: GenerationRule[] = [
     families: ['sparkle'],
     priority: 80,
     layer: {
-      effect: ['Sparkle', 'Twinkle', 'Glitter'],
+      effect: ['Twinkle', 'Sparkle', 'Glitter'],
       palette: [],
       colors: [[255, 220, 50], [255, 170, 0], [255, 255, 255]],
       speed: 150,
@@ -66,7 +66,7 @@ export const DEFAULT_GENERATION_RULES: GenerationRule[] = [
     families: ['flow', 'rain'],
     priority: 35,
     layer: {
-      effect: ['Rain', 'Colorwaves', 'Flow'],
+      effect: ['Colorwaves', 'Rain', 'Flow'],
       palette: [],
       colors: [[100, 200, 255], [50, 150, 255], [0, 100, 200]],
       speed: 120,

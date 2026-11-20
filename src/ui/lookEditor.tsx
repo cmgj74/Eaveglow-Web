@@ -24,7 +24,7 @@ export function LookEditor(props: { lookId?: string }) {
   const [active, setActive] = useState(0);
   const [sharing, setSharing] = useState(false);
   const [importing, setImporting] = useState(false);
-  const [coherent, setCoherent] = useState(false);
+  const [coherent, setCoherent] = useState(true);
   const [seedText, setSeedText] = useState('');
   const [testing, setTesting] = useState<TestSession | null>(null);
   const layer = look.layers[active] ?? look.layers[0];

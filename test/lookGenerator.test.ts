@@ -67,7 +67,7 @@ describe('coherent look generation', () => {
 
   it('stays faithful to the naming rules with coherent off', () => {
     const look = generateLookFromZones(zones, { seed: 12345 });
-    expect(look.layers.map((l) => l.effect[0])).toEqual(['Rain', 'Rain', 'Sparkle']);
+    expect(look.layers.map((l) => l.effect[0])).toEqual(['Colorwaves', 'Rain', 'Sparkle']);
     expect(look.layers.some((l) => l.palette.length > 0)).toBe(false);
   });
 
