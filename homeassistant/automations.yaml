@@ -1,0 +1,21 @@
+# Snippet — merge this list item into /config/automations.yaml on the HA host.
+# Copy only the "- id: wled_sunset_random_look" block; do not replace the file.
+- id: wled_sunset_random_look
+  alias: "WLED - Random look every 20-40 min until 23:00"
+  description: >-
+    At sunset, pick a fresh curated look, then pick another at a random
+    20-40 minute interval. Stops before the controller's 23:00 off timer.
+  trigger:
+    - platform: sun
+      event: sunset
+  condition: []
+  action:
+    - repeat:
+        while:
+          - condition: template
+            value_template: "{{ now() < today_at('23:00') }}"
+        sequence:
+          - action: shell_command.wled_random_look
+          - delay:
+              minutes: "{{ range(20, 41) | random }}"
+  mode: single

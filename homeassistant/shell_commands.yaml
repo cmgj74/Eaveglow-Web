@@ -1,0 +1,2 @@
+# Snippet — merge this line into /config/shell_commands.yaml on the HA host.
+wled_random_look: python3 /config/scripts/wled_random_look.py

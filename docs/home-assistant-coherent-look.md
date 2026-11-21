@@ -39,6 +39,8 @@ Each generated look follows Eaveglow's coherent rules:
 | `/config/shell_commands.yaml` | `wled_random_look: python3 /config/scripts/wled_random_look.py` |
 | `/config/automations.yaml` | `wled_sunset_random_look` automation |
 
+Copies are versioned in this repo under [`homeassistant/`](../homeassistant/README.md): the Python script is verbatim, and the two YAML files contain only the relevant entries (merge them into your existing HA files — they are not full replacements).
+
 The WLED address is `192.168.1.230` (`WLED_HOST` near the top of the script);
 `WLED_URL` overrides it for testing.
 
