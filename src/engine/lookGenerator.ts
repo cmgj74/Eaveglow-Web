@@ -23,6 +23,19 @@ const FAMILY_KEYWORDS: Record<EffectFamily, string[]> = {
   solid: ['solid', 'breathe', 'fade', 'colorloop', 'gradient'],
 };
 
+/** Coordinated moods: pick one per look, then a different palette per zone. */
+const PALETTE_MOODS: Record<string, string[]> = {
+  warm: ['Sunset', 'Sunset 2', 'Orangery', 'Vintage', 'C9', 'Candy', 'Sakura', 'Autumn'],
+  cool: ['Ocean', 'Beach', 'Atlantica', 'Breeze', 'Cloud', 'Semi Blue', 'April Night'],
+  nature: ['Forest', 'Rivendell', 'Landscape', 'Aurora', 'Aurora 2', 'Cloud', 'Orange & Teal'],
+  festive: ['C9', 'C9 New', 'Candy', 'Pink Candy', 'Sherbet', 'Pastel', 'Sunset 2', 'Sakura'],
+};
+
+const COLOR_VARIATIONS: [number, number, number][] = [
+  [1, 1, 1], [1.18, 0.92, 0.8], [0.85, 1.08, 1.18],
+  [1.05, 0.8, 1.2], [1.2, 1.12, 0.72], [0.78, 1.2, 0.95],
+];
+
 /** Default generation rules based on common naming patterns. */
 export const DEFAULT_GENERATION_RULES: GenerationRule[] = [
   {
@@ -141,7 +154,6 @@ const pick = <T,>(items: T[], rand: () => number): T | undefined =>
 interface CoherentContext {
   rand: () => number;
   effects: string[];
-  palette?: string;
   colors: Rgb[];
   speed: number;
   intensity: number;
@@ -162,16 +174,81 @@ function chooseEffect(rule: GenerationRule, ctx: CoherentContext): string {
   return chosen;
 }
 
-/** Build a coherent layer: shared palette/colors/rhythm, family-matched effect. */
-function coherentLayer(base: LookLayer, rule: GenerationRule, ctx: CoherentContext): LookLayer {
-  return {
-    ...base,
-    effect: [chooseEffect(rule, ctx)],
-    palette: ctx.palette ? [ctx.palette] : [],
-    colors: ctx.colors.map((c) => [...c] as Rgb),
-    speed: clamp(ctx.speed + Math.floor(ctx.rand() * 25) - 12, 16, 250),
-    intensity: clamp(ctx.intensity + Math.floor(ctx.rand() * 25) - 12, 16, 250),
-  };
+/** Blend a zone family's own colors with that zone's palette accent. */
+const mixColor = (base: Rgb, accent: Rgb): Rgb => [
+  Math.round(base[0] * 0.6 + accent[0] * 0.4),
+  Math.round(base[1] * 0.6 + accent[1] * 0.4),
+  Math.round(base[2] * 0.6 + accent[2] * 0.4),
+];
+
+const varyColor = (colors: Rgb[], index: number): Rgb[] => {
+  const factor = COLOR_VARIATIONS[index % COLOR_VARIATIONS.length];
+  return colors.map((c) => [
+    Math.min(255, Math.round(c[0] * factor[0])),
+    Math.min(255, Math.round(c[1] * factor[1])),
+    Math.min(255, Math.round(c[2] * factor[2])),
+  ] as Rgb);
+};
+
+function sampleUnique<T>(items: T[], count: number, rand: () => number): T[] {
+  const pool = [...items];
+  const out: T[] = [];
+  for (let i = 0; i < count && pool.length; i++) {
+    out.push(pool.splice(Math.floor(rand() * pool.length), 1)[0]);
+  }
+  return out;
+}
+
+/** One layer per zone: shared family effect, distinct palette and tint. */
+function buildCoherentLayers(
+  groups: Map<number, { rule: GenerationRule; zones: Zone[] }>,
+  priorities: number[],
+  availablePalettes: string[],
+  ctx: CoherentContext
+): LookLayer[] {
+  const moods = Object.entries(PALETTE_MOODS).filter(([, list]) =>
+    list.some((p) => availablePalettes.includes(p))
+  );
+  const mood = pick(moods, ctx.rand);
+  const moodInstalled = (mood ? mood[1] : availablePalettes).filter((p) => availablePalettes.includes(p));
+  const familyPicks = sampleUnique(moodInstalled, Math.min(moodInstalled.length, priorities.length), ctx.rand);
+  while (familyPicks.length < priorities.length && moodInstalled.length) {
+    familyPicks.push(pick(moodInstalled, ctx.rand) ?? moodInstalled[0]);
+  }
+
+  const layers: LookLayer[] = [];
+  priorities.forEach((priority, familyIndex) => {
+    const group = groups.get(priority)!;
+    const rule = group.rule;
+    const effect = chooseEffect(rule, ctx);
+    const basePalette = familyPicks[familyIndex];
+    const paletteChoices = basePalette
+      ? [basePalette, ...moodInstalled.filter((p) => p !== basePalette)]
+      : [];
+    const speed = clamp(ctx.speed + Math.floor(ctx.rand() * 25) - 12, 16, 250);
+    const intensity = clamp(ctx.intensity + Math.floor(ctx.rand() * 25) - 12, 16, 250);
+    group.zones.forEach((zone, n) => {
+      const paletteName = paletteChoices.length ? paletteChoices[n % paletteChoices.length] : undefined;
+      const stops = paletteName
+        ? (paletteByWledName(paletteName)?.stops ?? ctx.colors).filter((c) => c.some((v) => v > 20)).slice(0, 2)
+        : [];
+      const accent = stops.length ? stops : ctx.colors;
+      const colors = varyColor(
+        rule.layer.colors.map((c, i) => mixColor(c, accent[i % accent.length])),
+        n
+      );
+      layers.push({
+        ...rule.layer,
+        target: { kind: 'zones', zoneIds: [zone.id] },
+        effect: [effect],
+        palette: paletteName ? [paletteName] : [],
+        colors,
+        speed,
+        intensity,
+      });
+    });
+  });
+  return layers;
 }
 
 export interface GenerateOptions {
@@ -191,9 +268,9 @@ export interface GenerateOptions {
 /**
  * Generate a look from zones.
  *
- * Faithful mode uses the fixed rules. Coherent mode picks ONE palette and
- * colour set for the entire house, then chooses a different family-appropriate
- * effect for every part — varied, but still looks deliberately decorated.
+ * Faithful mode uses the fixed rules. Coherent mode picks one coordinated
+ * mood, then a different palette and tint for every zone while keeping one
+ * family-appropriate effect per zone type — varied, but deliberately decorated.
  */
 export function generateLookFromZones(
   zones: Zone[],
@@ -214,8 +291,8 @@ export function generateLookFromZones(
   const availablePalettes = (options.palettes ?? []).filter(
     (p) => p && !/^(default|\* colors only)$/i.test(p.trim())
   );
-  const palette = options.coherent ? pick(availablePalettes, rand) : undefined;
-  const paletteStops = palette ? paletteByWledName(palette)?.stops : undefined;
+  const fallbackPalette = pick(availablePalettes, rand);
+  const paletteStops = fallbackPalette ? paletteByWledName(fallbackPalette)?.stops : undefined;
   // Skip near-black gradient stops (e.g. Icefire starts at black) so a solid
   // effect never comes out dark; the palette still supplies the real gradient.
   const visibleStops = paletteStops?.filter((c) => c.some((v) => v > 20));
@@ -224,19 +301,21 @@ export function generateLookFromZones(
     effects: options.effects?.length
       ? options.effects
       : [...new Set(DEFAULT_GENERATION_RULES.flatMap((r) => r.layer.effect))],
-    palette,
     colors: visibleStops?.length ? visibleStops.slice(0, 2) : [[255, 170, 90], [255, 255, 255]],
     speed: 64 + Math.floor(rand() * 70),
     intensity: 110 + Math.floor(rand() * 70),
     used: new Set<string>(),
   };
 
-  const layers = priorities.map((priority) => {
-    const group = groups.get(priority)!;
-    const target = { kind: 'zones' as const, zoneIds: group.zones.map((z) => z.id) };
-    const base: LookLayer = { ...group.rule.layer, target };
-    return options.coherent ? coherentLayer(base, group.rule, ctx) : base;
-  });
+  const layers = options.coherent
+    ? buildCoherentLayers(groups, priorities, availablePalettes, ctx)
+    : priorities.map((priority) => {
+        const group = groups.get(priority)!;
+        return {
+          ...group.rule.layer,
+          target: { kind: 'zones' as const, zoneIds: group.zones.map((z) => z.id) },
+        };
+      });
 
   return {
     id: newId(),

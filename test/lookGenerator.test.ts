@@ -41,11 +41,31 @@ describe('coherent look generation', () => {
     }
   });
 
-  it('uses one palette across every layer, chosen from the controller', () => {
+  it('uses a different palette from one mood for every zone', () => {
     const look = coherent(4242);
     const palettes = new Set(look.layers.map((l) => l.palette[0]));
-    expect(palettes.size).toBe(1);
-    expect(wled16Palettes).toContain([...palettes][0]);
+    expect(palettes.size).toBe(look.layers.length);
+    for (const p of palettes) expect(wled16Palettes).toContain(p);
+  });
+
+  it('varies colors between zones', () => {
+    const look = coherent(4242);
+    const colorSets = look.layers.map((l) => JSON.stringify(l.colors));
+    expect(new Set(colorSets).size).toBe(colorSets.length);
+  });
+
+  it('keeps one effect per family but varies palette and tint within it', () => {
+    const sameFamily = [
+      { id: 'a', name: 'Lower Front 1', start: 0, length: 10 },
+      { id: 'b', name: 'Upper Front 1', start: 10, length: 10 },
+    ];
+    const look = generateLookFromZones(sameFamily, {
+      coherent: true, effects: wled16Effects, palettes: wled16Palettes, seed: 77,
+    });
+    expect(look.layers).toHaveLength(2);
+    expect(look.layers[0].effect[0]).toBe(look.layers[1].effect[0]);
+    expect(look.layers[0].palette[0]).not.toBe(look.layers[1].palette[0]);
+    expect(look.layers[0].colors).not.toEqual(look.layers[1].colors);
   });
 
   it('gives each part a different effect', () => {
