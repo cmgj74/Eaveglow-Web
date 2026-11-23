@@ -32,6 +32,13 @@ wled_random_look: "curl -fsSL http://<controller>/eaveglow-ha.py -o /tmp/eaveglo
 - `/eaveglow.json` — autopilot seasons, special dates, hidden looks, transition
 - `/eaveglow-library.json` — look definitions, holiday date rules, palette stops
 
+**Custom palettes:** Eaveglow's ★ palettes live on the controller as
+`/paletteN.json` files with ids counting down from 200 (WLED 16). The generator
+scans those files on every run and uses them by name. If a selected look needs a
+★ palette that isn't installed, it uploads the definition from
+`/eaveglow-library.json` into the first free slot before applying the look.
+Dry runs only scan; they never install.
+
 The generator compiles the chosen Eaveglow look against the **current**
 segments in Python (a port of `compileLook`, golden-tested against the
 TypeScript original in `homeassistant/tests/fixtures_compiled.json`), so exact

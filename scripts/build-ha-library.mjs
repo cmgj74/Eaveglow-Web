@@ -26,7 +26,11 @@ const holidays = lib.holidays.map((h) => ({ id: h.id, name: h.name, emoji: h.emo
 
 // Only ship palettes that a look actually references.
 const used = new Set(looks.flatMap((l) => l.layers.flatMap((layer) => layer.palette ?? [])));
-const palettes = lib.palettes.filter((p) => used.has(p.wled)).map((p) => ({ wled: p.wled, stops: p.stops }));
+const palettes = lib.palettes.filter((p) => used.has(p.wled)).map((p) => ({
+  wled: p.wled,
+  stops: p.stops,
+  ...(p.positions ? { positions: p.positions } : {}),
+}));
 
 mkdirSync('dist', { recursive: true });
 const out = JSON.stringify({ looks, holidays, palettes });

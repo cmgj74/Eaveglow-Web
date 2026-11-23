@@ -663,6 +663,108 @@ def resolve_palette_names(names: list[str], candidates: list[str]) -> int | None
     return None
 
 
+# Custom WLED palettes live in /paletteN.json; their ids count down from base.
+CUSTOM_PALETTE_IDS: dict[str, int] = {}
+PALETTE_SLOTS = (200, 129)
+
+
+def palette_slots(info: dict) -> tuple[int, int]:
+    try:
+        major = int((info.get("ver") or "0").split(".")[0])
+    except ValueError:
+        major = 0
+    if major < 16:
+        return 255, 10
+    return 200, 10 if "8266" in (info.get("arch") or "").lower() else 129
+
+
+def read_optional_json(path: str) -> dict | None:
+    try:
+        with urllib.request.urlopen(BASE_URL + path, timeout=TIMEOUT) as resp:
+            return json.load(resp)
+    except urllib.error.HTTPError as exc:
+        if exc.code == 404:
+            return None
+        raise
+
+
+def upload_file(path: str, content: str, content_type: str = "application/json") -> None:
+    """Multipart upload to WLED, using only the stdlib (HA has no requests)."""
+    boundary = "----eaveglow-boundary"
+    head = (
+        f"--{boundary}\r\n"
+        f'Content-Disposition: form-data; name="data"; filename="{path}"\r\n'
+        f"Content-Type: {content_type}\r\n\r\n"
+    ).encode()
+    body = head + content.encode("utf-8") + f"\r\n--{boundary}--\r\n".encode()
+    req = urllib.request.Request(
+        BASE_URL + "/upload", data=body, method="POST",
+        headers={"Content-Type": f"multipart/form-data; boundary={boundary}"},
+    )
+    with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+        resp.read()
+
+
+def custom_palette_file(preset: dict) -> str:
+    """WLED's palette file format from an Eaveglow palette definition."""
+    stops = preset.get("stops") or []
+    count = len(stops)
+    positions = preset.get("positions") or [
+        round((i * 255) / max(1, count - 1)) for i in range(count)
+    ]
+    palette = []
+    for i, color in enumerate(stops):
+        palette += [positions[i], "".join(f"{int(v):02X}" for v in color)]
+    return json.dumps({"n": preset["wled"], "palette": palette})
+
+
+def scan_custom_palettes(info: dict) -> dict[str, int]:
+    """Map installed ★ palette names to their WLED ids."""
+    global PALETTE_SLOTS
+    PALETTE_SLOTS = palette_slots(info)
+    base, maximum = PALETTE_SLOTS
+    found: dict[str, int] = {}
+    for slot in range(maximum):
+        try:
+            data = read_optional_json(f"/palette{slot}.json")
+        except (urllib.error.URLError, OSError, ValueError):
+            continue
+        if data and data.get("n"):
+            found[data["n"]] = base - slot
+    return found
+
+
+def ensure_custom_palettes(names: list[str], library: dict | None, info: dict,
+                           install: bool = True) -> dict[str, int]:
+    """Make the named ★ palettes available on the controller, installing
+    missing ones from the library definition. Returns name → WLED id."""
+    global CUSTOM_PALETTE_IDS
+    wanted = [n for n in names if n and n.startswith("★ ")]
+    if not wanted:
+        return {}
+    CUSTOM_PALETTE_IDS = scan_custom_palettes(info)
+    if not install:
+        return {name: CUSTOM_PALETTE_IDS[name] for name in wanted if name in CUSTOM_PALETTE_IDS}
+    presets = {p["wled"]: p for p in (library or {}).get("palettes", [])}
+    base, maximum = PALETTE_SLOTS
+    added = False
+    for name in wanted:
+        if name in CUSTOM_PALETTE_IDS or name not in presets:
+            continue
+        for slot in range(maximum):
+            if read_optional_json(f"/palette{slot}.json") is None:
+                try:
+                    upload_file(f"/palette{slot}.json", custom_palette_file(presets[name]))
+                    CUSTOM_PALETTE_IDS[name] = base - slot
+                    added = True
+                except (urllib.error.URLError, OSError):
+                    pass
+                break
+    if added:
+        CUSTOM_PALETTE_IDS = scan_custom_palettes(info)
+    return {name: CUSTOM_PALETTE_IDS[name] for name in wanted if name in CUSTOM_PALETTE_IDS}
+
+
 def resolve_palette(names: list[str], name: str) -> int | None:
     """Resolve a palette name, with or without Eaveglow's ★ marker."""
     plain = name[2:] if name.startswith("★ ") else name
@@ -670,6 +772,9 @@ def resolve_palette(names: list[str], name: str) -> int | None:
         idx = resolve_id(names, [candidate])
         if idx is not None:
             return idx
+    for candidate in (name, plain):
+        if candidate in CUSTOM_PALETTE_IDS:
+            return CUSTOM_PALETTE_IDS[candidate]
     return None
 
 
@@ -925,7 +1030,13 @@ def main() -> int:
 
     # Eaveglow looks can be posted exactly or adapted to the zone families.
     entries = holiday["looks"] if holiday else []
-    exact = [e for e in entries if e.get("look", {}).get("layers")]
+    wanted = [p for e in entries
+              for p in ([e.get("palette")] if isinstance(e.get("palette"), str) else [])
+              + [q for lyr in ((e.get("look") or {}).get("layers") or e.get("layers") or [])
+                 for q in (lyr.get("palette") or []) if isinstance(q, str)]
+              if isinstance(p, str)]
+    ensure_custom_palettes(wanted, library, snapshot.get("info") or {}, install=not args.dry_run)
+    exact = [e for e in entries if (e.get("look") or {}).get("layers")]
     mode = "adapt"
     if exact:
         if args.exact_only:
@@ -949,7 +1060,7 @@ def main() -> int:
                 break
         summary = f"exact={entry['name']} (Eaveglow look)"
     else:
-        installed_palettes = set(palettes or [])
+        installed_palettes = set(palettes or []) | set(CUSTOM_PALETTE_IDS)
         recipes = [
             recipe_from_look(e, installed_palettes, holiday["id"] if holiday else "")
             for e in entries if e.get("effect")

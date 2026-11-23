@@ -126,7 +126,7 @@ class AdaptedModeTests(unittest.TestCase):
         self.assertEqual(w.stops_for("★ Peppermint")[0], [255, 0, 0])
 
     def test_holiday_palettes_override_generic_ones(self):
-        installed = set(PALETTES) | {"C9", "C9 New", "Candy"}
+        installed = set(w.PALETTES) | {"C9", "C9 New", "Candy"}
         recipe = w.recipe_from_look(
             {"id": "builtin.xm_candy_twinkle", "effect": "Twinklefox",
              "palette": "★ Peppermint", "colors": [[255, 0, 0]]},
@@ -135,6 +135,38 @@ class AdaptedModeTests(unittest.TestCase):
         self.assertEqual(recipe["palettes"][0], "C9")
         self.assertNotIn("Ocean", recipe["palettes"])
         self.assertNotIn("Beach", recipe["palettes"])
+
+    def test_palette_slots_by_version(self):
+        self.assertEqual(w.palette_slots({"ver": "0.15.0", "arch": "esp8266"}), (255, 10))
+        self.assertEqual(w.palette_slots({"ver": "16.0.1", "arch": "esp32"}), (200, 129))
+        self.assertEqual(w.palette_slots({"ver": "16.0.1", "arch": "esp8266"}), (200, 10))
+
+    def test_custom_palette_file_format(self):
+        payload = json.loads(w.custom_palette_file({
+            "wled": "★ Peppermint",
+            "stops": [[255, 0, 0], [255, 255, 255], [255, 0, 0]],
+        }))
+        self.assertEqual(payload["n"], "★ Peppermint")
+        self.assertEqual(payload["palette"], [0, "FF0000", 128, "FFFFFF", 255, "FF0000"])
+
+    def test_ensure_custom_palettes_installs_missing(self):
+        library = {"palettes": [{"wled": "★ Peppermint", "stops": [[255, 0, 0]],
+                                 "positions": [0]}]}
+        original_scan, original_read, original_upload = (
+            w.scan_custom_palettes, w.read_optional_json, w.upload_file)
+        uploaded = []
+        try:
+            w.scan_custom_palettes = lambda info: (
+                {"★ Peppermint": 200} if uploaded else {})
+            w.read_optional_json = lambda path: None
+            w.upload_file = lambda path, content, **kw: uploaded.append((path, content))
+            ids = w.ensure_custom_palettes(["★ Peppermint"], library, {"ver": "16.0.1"})
+            self.assertEqual(ids, {"★ Peppermint": 200})
+            self.assertEqual(uploaded[0][0], "/palette0.json")
+        finally:
+            w.scan_custom_palettes, w.read_optional_json, w.upload_file = (
+                original_scan, original_read, original_upload)
+            w.CUSTOM_PALETTE_IDS = {}
 
     def test_playback_settings(self):
         bri, tr = w.playback_settings({"bri": 88}, {"transition": 12})
