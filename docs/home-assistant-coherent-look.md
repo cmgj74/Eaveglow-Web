@@ -31,6 +31,16 @@ Each generated look follows Eaveglow's coherent rules:
   `col` are sent.
 - Re-rolls up to 12 times if it would repeat the current look.
 
+## Palettes
+
+Holiday looks prefer **on-theme palettes** so Christmas displays use C9, C9 New,
+Candy, Vintage, Autumn, Sakura and Sunset 2 instead of generic fallback palettes.
+When a look's own palette is a custom **★** palette, HA reads it live from the
+controller's `/paletteN.json` files (WLED ids count down from 200). If it isn't
+installed, HA uploads the palette definition from `/eaveglow-library.json` into
+the first free slot before applying the look — no manual palette copying. Dry
+runs only scan; they never install.
+
 ## Holidays
 
 **Every holiday, Christmas included, follows Eaveglow's autopilot calendar**
