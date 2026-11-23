@@ -361,8 +361,21 @@ def families_for_effect(effect: str) -> set[str]:
     return {"garage"}
 
 
-def recipe_from_look(entry: dict) -> dict:
-    """Turn one Eaveglow Christmas look into a family/step recipe."""
+# Palette preferences per holiday, used when a look's own palette isn't
+# installed on the controller (custom ★ palettes often aren't).
+HOLIDAY_PALETTES = {
+    "christmas": ("C9", "C9 New", "Candy", "Vintage", "Sakura", "Autumn", "Sunset 2"),
+    "halloween": ("Orangery", "Autumn", "Vintage", "C9", "Sakura"),
+    "thanksgiving": ("Autumn", "Vintage", "Orangery", "Sunset"),
+    "easter": ("Pastel", "Sakura", "Sherbet", "Candy"),
+    "valentines": ("Sakura", "Pink Candy", "Candy", "Sunset 2"),
+    "st_patricks": ("Forest", "Landscape", "Aurora", "C9 New"),
+    "july_4th": ("C9 New", "C9", "Vintage", "Sunset 2"),
+}
+
+
+def recipe_from_look(entry: dict, installed: set[str] | None = None, holiday: str = "") -> dict:
+    """Turn one Eaveglow look into a family/step recipe."""
     effect = entry.get("effect", "Solid")
     suited = families_for_effect(effect)
     effects = {}
@@ -371,8 +384,15 @@ def recipe_from_look(entry: dict) -> dict:
             effects[family] = (effect,) + tuple(base["effects"][:2])
         else:
             effects[family] = tuple(base["effects"][:3])
-    palette = entry.get("palette", "")
-    palettes = ([palette] if palette else []) + [p for p in PALETTES if p != palette][:4]
+    own = entry.get("palette", "")
+    available = installed if installed is not None else set(PALETTES)
+    ordered = []
+    for name in [own, *HOLIDAY_PALETTES.get(holiday, ())]:
+        if name and name in available and name not in ordered:
+            ordered.append(name)
+    # When the holiday has on-theme palettes, use only those — otherwise the
+    # random sample would mostly pick generic calm palettes like Ocean/Beach.
+    palettes = ordered if ordered else list(available)[:8]
     return {
         "name": entry.get("id", "eaveglow"),
         "palettes": palettes,
@@ -929,7 +949,11 @@ def main() -> int:
                 break
         summary = f"exact={entry['name']} (Eaveglow look)"
     else:
-        recipes = [recipe_from_look(e) for e in entries if e.get("effect")] if entries else None
+        installed_palettes = set(palettes or [])
+        recipes = [
+            recipe_from_look(e, installed_palettes, holiday["id"] if holiday else "")
+            for e in entries if e.get("effect")
+        ] if entries else None
         updates, summary = build_look(state, effects, palettes, rng, bool(entries), recipes)
         for _ in range(12):
             if signature(updates) != current:

@@ -125,6 +125,17 @@ class AdaptedModeTests(unittest.TestCase):
         self.assertIsNone(w.resolve_palette(names, "★ Grinch"))
         self.assertEqual(w.stops_for("★ Peppermint")[0], [255, 0, 0])
 
+    def test_holiday_palettes_override_generic_ones(self):
+        installed = set(PALETTES) | {"C9", "C9 New", "Candy"}
+        recipe = w.recipe_from_look(
+            {"id": "builtin.xm_candy_twinkle", "effect": "Twinklefox",
+             "palette": "★ Peppermint", "colors": [[255, 0, 0]]},
+            installed, "christmas",
+        )
+        self.assertEqual(recipe["palettes"][0], "C9")
+        self.assertNotIn("Ocean", recipe["palettes"])
+        self.assertNotIn("Beach", recipe["palettes"])
+
     def test_playback_settings(self):
         bri, tr = w.playback_settings({"bri": 88}, {"transition": 12})
         self.assertEqual((bri, tr), (88, 12))
