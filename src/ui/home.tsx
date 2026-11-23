@@ -135,6 +135,7 @@ export function Home() {
           {settings.schedule.enabled ? '⏰' : '🕒'}
         </button>
         <button class="icon" title="House zones" onClick={() => go('/zones')}>🏠</button>
+        <button class="icon" title="Install to Home Assistant" onClick={() => go('/ha')}>🏡</button>
         <button class="icon" title={themeLabel[theme]} aria-label={themeLabel[theme]} onClick={() => (setTheme(nextTheme[theme]), setThemeState(nextTheme[theme]))}>
           {themeIcon[theme]}
         </button>

@@ -8,7 +8,7 @@
   "scripts": {
     "screenshots": "node scripts/screenshots.mjs",
     "dev": "vite",
-    "build": "tsc --noEmit && vite build && node scripts/gzip.mjs",
+    "build": "tsc --noEmit && vite build && node scripts/gzip.mjs && node scripts/build-ha-library.mjs && node scripts/build-ha-runtime.mjs",
     "test": "vitest run",
     "install-to": "node scripts/install.mjs"
   },

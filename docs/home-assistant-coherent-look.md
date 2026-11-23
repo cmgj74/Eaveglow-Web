@@ -45,26 +45,27 @@ Autopilot stays on — otherwise WLED's dated season presets will apply looks
 at on-times and fight with HA. `--force-christmas` is a testing override that
 ignores the calendar.
 
-Eaveglow's 14 holidays and their looks are bundled in
-`homeassistant/looks/holidays.json`, generated from `src/engine/library.json`
-by `node_modules/.bin/vite-node scripts/export-christmas-looks.ts`. The HA
-script either adapts a look's effect/colours to the zone families
-(`--adapt-only`) or posts the exact compiled WLED state (`--exact-only`),
-alternating by default. Exact payloads are guarded by a layout fingerprint —
-regenerate the bundle after changing zones.
+Eaveglow serves its look library at `/eaveglow-library.json` and the generator
+at `/eaveglow-ha.py`. The HA shell command downloads the generator **on every
+run**, and the generator reads the library, segments, settings and effect
+metadata live from the controller — nothing is installed by hand and there is
+no bundle to regenerate. It either adapts a look's effect/colours to the zone
+families (`--adapt-only`) or compiles the exact Eaveglow look against the
+current segments (`--exact-only`), alternating by default.
 
-## Files (HA container paths)
+Open Eaveglow and tap **🏡 Install to HA** for the ready-to-paste shell command
+and automation.
 
-| File | Purpose |
+## HA files
+
+| HA file | Purpose |
 | --- | --- |
-| `/config/scripts/wled_random_look.py` | Python 3 generator (stdlib only) |
-| `/config/shell_commands.yaml` | `wled_random_look: python3 /config/scripts/wled_random_look.py` |
+| `/config/shell_commands.yaml` | `wled_random_look:` bootstrap (downloads and runs `/eaveglow-ha.py`) |
 | `/config/automations.yaml` | `wled_sunset_random_look` automation |
 
-Copies are versioned in this repo under [`homeassistant/`](../homeassistant/README.md): the Python script is verbatim, and the two YAML files contain only the relevant entries (merge them into your existing HA files — they are not full replacements).
-
-The WLED address is `192.168.1.230` (`WLED_HOST` near the top of the script);
-`WLED_URL` overrides it for testing.
+The generator itself lives on the controller (`/eaveglow-ha.py`), not in HA —
+updating Eaveglow updates HA's behaviour automatically. Example snippets are
+versioned in [`homeassistant/`](../homeassistant/README.md).
 
 ## Automation
 

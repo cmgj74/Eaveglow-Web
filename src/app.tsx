@@ -11,6 +11,7 @@ import { EffectCatalog, compileLook, toStateJson } from './engine/segmentCompile
 import { WledClient } from './engine/wledClient';
 import { SettingsStore, Settings } from './store';
 import { Home } from './ui/home';
+import { HaSetupPage } from './ui/haSetup';
 import { LookEditor } from './ui/lookEditor';
 import { PropsPage } from './ui/props';
 import { SchedulePage } from './ui/schedule';
@@ -245,6 +246,8 @@ export function App() {
         <PropsPage />
       ) : page === 'schedule' ? (
         <SchedulePage />
+      ) : page === 'ha' ? (
+        <HaSetupPage />
       ) : (
         <Home />
       )}

@@ -20,6 +20,8 @@ async function upload(file, name, type) {
 try {
   await upload('dist/eaveglow.htm.gz', '/eaveglow.htm.gz', 'application/gzip');
   await upload('dist/eaveglow-icon.png', '/eaveglow-icon.png', 'image/png');
+  await upload('dist/eaveglow-library.json', '/eaveglow-library.json', 'application/json');
+  await upload('dist/eaveglow-ha.py', '/eaveglow-ha.py', 'text/x-python');
   console.log(`\nDone! Open ${base}/eaveglow.htm on your phone, then Share → Add to Home Screen.`);
 } catch (e) {
   console.error(`✗ ${e.message}`);
