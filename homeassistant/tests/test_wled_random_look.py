@@ -84,5 +84,44 @@ class BuildLookTests(unittest.TestCase):
         self.assertEqual(w.stops_for("★ Peppermint")[0], [255, 0, 0])
 
 
+class ManifestTests(unittest.TestCase):
+    """Tests for the A+B manifest/precompiled-look bundle."""
+
+    def setUp(self):
+        self.bundle = w.load_looks_file()
+        if self.bundle is None:
+            self.skipTest("homeassistant/looks/christmas.json has not been generated")
+
+    def test_manifest_covers_the_real_christmas_looks(self):
+        looks = self.bundle["looks"]
+        self.assertGreaterEqual(len(looks), 20)
+        for entry in looks:
+            self.assertTrue(entry.get("effect"))
+            self.assertTrue(entry.get("payload", {}).get("seg"))
+
+    def test_look_recipe_maps_effect_to_the_right_family(self):
+        recipe = w.recipe_from_look({
+            "id": "builtin.test", "effect": "Drip", "palette": "",
+            "colors": [[255, 255, 255]],
+        })
+        self.assertIn("Drip", recipe["effects"]["front"])
+        self.assertNotIn("Drip", recipe["effects"]["side"])
+
+    def test_fingerprint_guards_exact_payloads(self):
+        fingerprint = self.bundle["fingerprint"]
+        segs = [{"id": row[0], "start": row[1], "stop": row[2]} for row in fingerprint]
+        self.assertTrue(w.bundle_matches_layout(self.bundle, segs))
+        self.assertFalse(w.bundle_matches_layout(self.bundle, segs[:-1]))
+        changed = [dict(s) for s in segs]
+        changed[0] = {**changed[0], "start": 999}
+        self.assertFalse(w.bundle_matches_layout(self.bundle, changed))
+        self.assertIsNotNone(w.look_payload(self.bundle["looks"][0]))
+
+    def test_adapt_mode_uses_eaveglow_look_ids(self):
+        recipes = [w.recipe_from_look(e) for e in self.bundle["looks"]]
+        _, summary = w.build_look(STATE, EFFECTS, PALETTES, random.Random(4), True, recipes)
+        self.assertTrue(summary.startswith("recipe=builtin."), summary)
+
+
 if __name__ == "__main__":
     unittest.main()

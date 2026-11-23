@@ -45,6 +45,15 @@ fallbacks. Cadence (20–40 min) and the 23:00 cutoff are unchanged.
 Use `--date`, `--force-christmas` or `--no-christmas` with `--dry-run` to test
 either side of the window without changing the lights.
 
+Eaveglow's 28 real Christmas looks are bundled in `homeassistant/looks/christmas.json`,
+generated from `src/engine/library.json` by
+`node_modules/.bin/vite-node scripts/export-christmas-looks.ts`. The HA script
+uses them two ways: it either adapts a look's effect/colours to the zone
+families (`--adapt-only`) or posts the exact compiled WLED state for that look
+against your current segment layout (`--exact-only`). By default it alternates
+the two. Exact payloads are guarded by a layout fingerprint — regenerate the
+bundle after changing zones.
+
 ## Files (HA container paths)
 
 | File | Purpose |

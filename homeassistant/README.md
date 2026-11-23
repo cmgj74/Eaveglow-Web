@@ -6,7 +6,8 @@ drop-in replacement for your whole HA config.
 
 | File in this repo | Installed at | Notes |
 | --- | --- | --- |
-| `scripts/wled_random_look.py` | `/config/scripts/wled_random_look.py` | Copied verbatim (SHA-256 `b0a54fc8…`). Python 3 stdlib only. |
+| `scripts/wled_random_look.py` | `/config/scripts/wled_random_look.py` | Python 3 stdlib only; copy when deploying. |
+| `looks/christmas.json` | `/config/looks/christmas.json` | Generated from Eaveglow's `library.json`; 28 Christmas looks, adapted styles + exact payloads. |
 | `shell_commands.yaml` | `/config/shell_commands.yaml` | Merge the `wled_random_look:` line into your existing file. |
 | `automations.yaml` | `/config/automations.yaml` | Merge only the `wled_sunset_random_look` list item into your existing list. |
 
@@ -48,6 +49,27 @@ python3 /config/scripts/wled_random_look.py --dry-run --date 2026-11-25   # norm
 python3 /config/scripts/wled_random_look.py --dry-run --date 2026-11-26   # Christmas
 python3 /config/scripts/wled_random_look.py --dry-run --force-christmas    # any date
 python3 /config/scripts/wled_random_look.py --dry-run --no-christmas       # force off
+```
+
+### Using Eaveglow's real Christmas looks (A + B)
+
+`looks/christmas.json` is generated from Eaveglow's `src/engine/library.json`
+by `node_modules/.bin/vite-node scripts/export-christmas-looks.ts`. It contains
+all 28 Christmas looks in two forms:
+
+- **Adapted style** — effect, palette and colours, mapped onto the current zone
+  families by the generator (`--adapt-only`)
+- **Exact look** — the WLED state Eaveglow compiles for that look against your
+  segment layout, posted verbatim (`--exact-only`)
+
+By default Christmas mode alternates the two at random. Exact mode is guarded
+by a layout fingerprint: if you change your zones, regenerate the bundle or it
+automatically falls back to adapted styles.
+
+Install the bundle on HA alongside the script:
+
+```
+cp -R ~/Documents/Git/Eaveglow-Web/homeassistant/looks /config/looks/
 ```
 
 Run the Python tests from the repo root:

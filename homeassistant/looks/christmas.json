@@ -1,0 +1,4157 @@
+{
+ "generatedAt": "2026-11-23T14:08:41.295Z",
+ "source": "../src/engine/library.json",
+ "host": "wled-dig-octa-32-8l",
+ "segmentCount": 15,
+ "fingerprint": [
+  [
+   0,
+   0,
+   6
+  ],
+  [
+   1,
+   6,
+   23
+  ],
+  [
+   2,
+   23,
+   35
+  ],
+  [
+   3,
+   35,
+   50
+  ],
+  [
+   4,
+   50,
+   77
+  ],
+  [
+   5,
+   77,
+   101
+  ],
+  [
+   6,
+   101,
+   136
+  ],
+  [
+   7,
+   136,
+   163
+  ],
+  [
+   8,
+   163,
+   201
+  ],
+  [
+   9,
+   201,
+   238
+  ],
+  [
+   10,
+   238,
+   263
+  ],
+  [
+   11,
+   263,
+   282
+  ],
+  [
+   12,
+   282,
+   304
+  ],
+  [
+   13,
+   304,
+   328
+  ],
+  [
+   14,
+   328,
+   339
+  ]
+ ],
+ "looks": [
+  {
+   "id": "builtin.candy_cane",
+   "name": "Candy Cane",
+   "effect": "Railway",
+   "palette": "",
+   "colors": [
+    [
+     255,
+     0,
+     0
+    ],
+    [
+     255,
+     255,
+     255
+    ]
+   ],
+   "speed": 90,
+   "intensity": 160,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        255,
+        255,
+        255
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 78,
+      "sx": 90,
+      "ix": 160,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.christmas_classic",
+   "name": "Christmas Classic",
+   "effect": "Solid",
+   "palette": "",
+   "colors": [
+    [
+     255,
+     0,
+     0
+    ]
+   ],
+   "speed": 128,
+   "intensity": 128,
+   "layers": 2,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 6,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 1,
+      "start": 6,
+      "stop": 23,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        255,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 2,
+      "start": 23,
+      "stop": 35,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 3,
+      "start": 35,
+      "stop": 50,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        255,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 4,
+      "start": 50,
+      "stop": 77,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 5,
+      "start": 77,
+      "stop": 101,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        255,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 6,
+      "start": 101,
+      "stop": 136,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 7,
+      "start": 136,
+      "stop": 163,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        255,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 8,
+      "start": 163,
+      "stop": 201,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 9,
+      "start": 201,
+      "stop": 238,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        255,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 10,
+      "start": 238,
+      "stop": 263,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 11,
+      "start": 263,
+      "stop": 282,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        255,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 12,
+      "start": 282,
+      "stop": 304,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 13,
+      "start": 304,
+      "stop": 328,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        255,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 14,
+      "start": 328,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.twinkle_stars",
+   "name": "Twinkle Stars",
+   "effect": "Twinklefox",
+   "palette": "",
+   "colors": [
+    [
+     255,
+     170,
+     90
+    ],
+    [
+     0,
+     0,
+     0
+    ]
+   ],
+   "speed": 80,
+   "intensity": 140,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        170,
+        90
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 80,
+      "sx": 80,
+      "ix": 140,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.icicles",
+   "name": "Icicles",
+   "effect": "Drip",
+   "palette": "",
+   "colors": [
+    [
+     120,
+     200,
+     255
+    ],
+    [
+     0,
+     0,
+     120
+    ]
+   ],
+   "speed": 90,
+   "intensity": 120,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        120,
+        200,
+        255
+       ],
+       [
+        0,
+        0,
+        120
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 96,
+      "sx": 90,
+      "ix": 120,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.snowfall",
+   "name": "Snowfall",
+   "effect": "Sparkle Dark",
+   "palette": "",
+   "colors": [
+    [
+     220,
+     235,
+     255
+    ],
+    [
+     255,
+     255,
+     255
+    ]
+   ],
+   "speed": 100,
+   "intensity": 120,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        220,
+        235,
+        255
+       ],
+       [
+        255,
+        255,
+        255
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 21,
+      "sx": 100,
+      "ix": 120,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.north_pole",
+   "name": "North Pole",
+   "effect": "Chase 2",
+   "palette": "",
+   "colors": [
+    [
+     255,
+     0,
+     0
+    ],
+    [
+     255,
+     255,
+     255
+    ]
+   ],
+   "speed": 80,
+   "intensity": 128,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        255,
+        255,
+        255
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 37,
+      "sx": 80,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.gingerbread",
+   "name": "Gingerbread",
+   "effect": "Twinklefox",
+   "palette": "Autumn",
+   "colors": [
+    [
+     170,
+     60,
+     10
+    ],
+    [
+     255,
+     255,
+     255
+    ]
+   ],
+   "speed": 70,
+   "intensity": 128,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        170,
+        60,
+        10
+       ],
+       [
+        255,
+        255,
+        255
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 80,
+      "sx": 70,
+      "ix": 128,
+      "pal": 39,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.silent_night",
+   "name": "Silent Night",
+   "effect": "Fairytwinkle",
+   "palette": "",
+   "colors": [
+    [
+     255,
+     170,
+     90
+    ],
+    [
+     0,
+     0,
+     120
+    ]
+   ],
+   "speed": 50,
+   "intensity": 100,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        170,
+        90
+       ],
+       [
+        0,
+        0,
+        120
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 51,
+      "sx": 50,
+      "ix": 100,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.christmas_tree",
+   "name": "Tree Lights",
+   "effect": "Twinklefox",
+   "palette": "C9 New",
+   "colors": [
+    [
+     255,
+     0,
+     0
+    ]
+   ],
+   "speed": 90,
+   "intensity": 180,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 80,
+      "sx": 90,
+      "ix": 180,
+      "pal": 53,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.santas_sleigh",
+   "name": "Santa's Sleigh",
+   "effect": "Meteor Smooth",
+   "palette": "",
+   "colors": [
+    [
+     255,
+     170,
+     0
+    ],
+    [
+     255,
+     0,
+     0
+    ]
+   ],
+   "speed": 160,
+   "intensity": 128,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        170,
+        0
+       ],
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 76,
+      "sx": 160,
+      "ix": 128,
+      "pal": 5,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.evergreen",
+   "name": "Evergreen Glitter",
+   "effect": "Solid Glitter",
+   "palette": "",
+   "colors": [
+    [
+     0,
+     120,
+     10
+    ],
+    [
+     255,
+     170,
+     0
+    ]
+   ],
+   "speed": 128,
+   "intensity": 90,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        120,
+        10
+       ],
+       [
+        255,
+        170,
+        0
+       ],
+       [
+        255,
+        170,
+        0
+       ]
+      ],
+      "fx": 103,
+      "sx": 128,
+      "ix": 90,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.xm_peppermint",
+   "name": "Peppermint Swirl",
+   "effect": "Palette",
+   "palette": "★ Peppermint",
+   "colors": [
+    [
+     255,
+     0,
+     0
+    ]
+   ],
+   "speed": 70,
+   "intensity": 40,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 65,
+      "sx": 70,
+      "ix": 40,
+      "pal": 33,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.xm_candy_twinkle",
+   "name": "Candy Cane Twinkle",
+   "effect": "Twinklefox",
+   "palette": "★ Peppermint",
+   "colors": [
+    [
+     255,
+     0,
+     0
+    ]
+   ],
+   "speed": 70,
+   "intensity": 190,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 80,
+      "sx": 70,
+      "ix": 190,
+      "pal": 33,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.xm_grinch",
+   "name": "Grinch",
+   "effect": "Twinklefox",
+   "palette": "★ Grinch",
+   "colors": [
+    [
+     0,
+     255,
+     0
+    ]
+   ],
+   "speed": 90,
+   "intensity": 180,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        255,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 80,
+      "sx": 90,
+      "ix": 180,
+      "pal": 31,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.xm_wonderland",
+   "name": "Winter Wonderland",
+   "effect": "Fairytwinkle",
+   "palette": "★ Winter Wonderland",
+   "colors": [
+    [
+     255,
+     255,
+     255
+    ]
+   ],
+   "speed": 40,
+   "intensity": 110,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        255,
+        255
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 51,
+      "sx": 40,
+      "ix": 110,
+      "pal": 15,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.xm_snowflakes",
+   "name": "Snowflakes",
+   "effect": "Sparkle",
+   "palette": "",
+   "colors": [
+    [
+     255,
+     255,
+     255
+    ],
+    [
+     0,
+     0,
+     120
+    ]
+   ],
+   "speed": 110,
+   "intensity": 80,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        255,
+        255
+       ],
+       [
+        0,
+        0,
+        120
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 20,
+      "sx": 110,
+      "ix": 80,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.xm_nutcracker",
+   "name": "Nutcracker March",
+   "effect": "Running",
+   "palette": "★ Nutcracker",
+   "colors": [
+    [
+     255,
+     0,
+     0
+    ]
+   ],
+   "speed": 90,
+   "intensity": 140,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 15,
+      "sx": 90,
+      "ix": 140,
+      "pal": 53,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.xm_ugly_sweater",
+   "name": "Ugly Sweater",
+   "effect": "Colortwinkles",
+   "palette": "★ Ugly Sweater",
+   "colors": [
+    [
+     255,
+     0,
+     0
+    ]
+   ],
+   "speed": 120,
+   "intensity": 200,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 74,
+      "sx": 120,
+      "ix": 200,
+      "pal": 48,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.xm_evergreen",
+   "name": "Evergreen & Gold",
+   "effect": "Colorwaves",
+   "palette": "★ Evergreen & Gold",
+   "colors": [
+    [
+     0,
+     120,
+     10
+    ]
+   ],
+   "speed": 50,
+   "intensity": 128,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        120,
+        10
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 67,
+      "sx": 50,
+      "ix": 128,
+      "pal": 31,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.xm_reindeer",
+   "name": "Reindeer Run",
+   "effect": "Multi Comet",
+   "palette": "",
+   "colors": [
+    [
+     255,
+     0,
+     0
+    ],
+    [
+     255,
+     170,
+     0
+    ]
+   ],
+   "speed": 150,
+   "intensity": 140,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        255,
+        170,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 59,
+      "sx": 150,
+      "ix": 140,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.xm_north_pole",
+   "name": "North Pole Lights",
+   "effect": "Twinklefox",
+   "palette": "★ North Pole",
+   "colors": [
+    [
+     255,
+     255,
+     255
+    ]
+   ],
+   "speed": 60,
+   "intensity": 160,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        255,
+        255
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 80,
+      "sx": 60,
+      "ix": 160,
+      "pal": 33,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.xm_tree_farm",
+   "name": "Tree Farm",
+   "effect": "Twinklefox",
+   "palette": "★ Evergreen & Gold",
+   "colors": [
+    [
+     0,
+     120,
+     10
+    ]
+   ],
+   "speed": 60,
+   "intensity": 200,
+   "layers": 2,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 6,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        120,
+        10
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 80,
+      "sx": 60,
+      "ix": 200,
+      "pal": 31,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 1,
+      "start": 6,
+      "stop": 23,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        170,
+        90
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 2,
+      "start": 23,
+      "stop": 35,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        120,
+        10
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 80,
+      "sx": 60,
+      "ix": 200,
+      "pal": 31,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 3,
+      "start": 35,
+      "stop": 50,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        170,
+        90
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 4,
+      "start": 50,
+      "stop": 77,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        120,
+        10
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 80,
+      "sx": 60,
+      "ix": 200,
+      "pal": 31,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 5,
+      "start": 77,
+      "stop": 101,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        170,
+        90
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 6,
+      "start": 101,
+      "stop": 136,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        120,
+        10
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 80,
+      "sx": 60,
+      "ix": 200,
+      "pal": 31,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 7,
+      "start": 136,
+      "stop": 163,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        170,
+        90
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 8,
+      "start": 163,
+      "stop": 201,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        120,
+        10
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 80,
+      "sx": 60,
+      "ix": 200,
+      "pal": 31,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 9,
+      "start": 201,
+      "stop": 238,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        170,
+        90
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 10,
+      "start": 238,
+      "stop": 263,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        120,
+        10
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 80,
+      "sx": 60,
+      "ix": 200,
+      "pal": 31,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 11,
+      "start": 263,
+      "stop": 282,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        170,
+        90
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 12,
+      "start": 282,
+      "stop": 304,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        120,
+        10
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 80,
+      "sx": 60,
+      "ix": 200,
+      "pal": 31,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 13,
+      "start": 304,
+      "stop": 328,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        170,
+        90
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 14,
+      "start": 328,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        0,
+        120,
+        10
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 80,
+      "sx": 60,
+      "ix": 200,
+      "pal": 31,
+      "rev": false
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.xm_silver_bells",
+   "name": "Silver Bells",
+   "effect": "Solid Glitter",
+   "palette": "",
+   "colors": [
+    [
+     220,
+     235,
+     255
+    ],
+    [
+     255,
+     255,
+     255
+    ]
+   ],
+   "speed": 128,
+   "intensity": 120,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        220,
+        235,
+        255
+       ],
+       [
+        255,
+        255,
+        255
+       ],
+       [
+        255,
+        255,
+        255
+       ]
+      ],
+      "fx": 103,
+      "sx": 128,
+      "ix": 120,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.magic_icicles",
+   "name": "Magic Icicles",
+   "effect": "Solid",
+   "palette": "",
+   "colors": [
+    [
+     66,
+     70,
+     77
+    ]
+   ],
+   "speed": 128,
+   "intensity": 128,
+   "layers": 2,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        66,
+        70,
+        77
+       ],
+       [
+        0,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 0,
+      "sx": 128,
+      "ix": 128,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "of": 0,
+      "sel": true,
+      "id": 1,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 3,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        220,
+        235,
+        255
+       ],
+       [
+        66,
+        70,
+        77
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 51,
+      "sx": 70,
+      "ix": 170,
+      "pal": 2,
+      "rev": false
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.festive_sparkle",
+   "name": "Festive Sparkle",
+   "effect": "Twinkle",
+   "palette": "",
+   "colors": [
+    [
+     255,
+     0,
+     0
+    ],
+    [
+     0,
+     255,
+     0
+    ],
+    [
+     255,
+     255,
+     255
+    ]
+   ],
+   "speed": 180,
+   "intensity": 200,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        0,
+        0
+       ],
+       [
+        0,
+        255,
+        0
+       ],
+       [
+        255,
+        255,
+        255
+       ]
+      ],
+      "fx": 17,
+      "sx": 180,
+      "ix": 200,
+      "pal": 5,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.christmas_warm",
+   "name": "Warm Christmas",
+   "effect": "Fire 2012",
+   "palette": "",
+   "colors": [
+    [
+     255,
+     100,
+     0
+    ],
+    [
+     255,
+     50,
+     0
+    ],
+    [
+     200,
+     0,
+     0
+    ]
+   ],
+   "speed": 80,
+   "intensity": 180,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        100,
+        0
+       ],
+       [
+        255,
+        50,
+        0
+       ],
+       [
+        200,
+        0,
+        0
+       ]
+      ],
+      "fx": 66,
+      "sx": 80,
+      "ix": 180,
+      "pal": 5,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.christmas_ice",
+   "name": "Ice & Snow",
+   "effect": "Twinklefox",
+   "palette": "",
+   "colors": [
+    [
+     200,
+     230,
+     255
+    ],
+    [
+     150,
+     200,
+     255
+    ],
+    [
+     255,
+     255,
+     255
+    ]
+   ],
+   "speed": 120,
+   "intensity": 150,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        200,
+        230,
+        255
+       ],
+       [
+        150,
+        200,
+        255
+       ],
+       [
+        255,
+        255,
+        255
+       ]
+      ],
+      "fx": 80,
+      "sx": 120,
+      "ix": 150,
+      "pal": 5,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  },
+  {
+   "id": "builtin.christmas_gold",
+   "name": "Gold & Red",
+   "effect": "Breathe",
+   "palette": "",
+   "colors": [
+    [
+     255,
+     200,
+     50
+    ],
+    [
+     200,
+     0,
+     0
+    ]
+   ],
+   "speed": 60,
+   "intensity": 180,
+   "layers": 1,
+   "payload": {
+    "on": true,
+    "transition": 7,
+    "mainseg": 0,
+    "seg": [
+     {
+      "of": 0,
+      "sel": true,
+      "id": 0,
+      "start": 0,
+      "stop": 339,
+      "grp": 1,
+      "spc": 0,
+      "on": true,
+      "bri": 255,
+      "col": [
+       [
+        255,
+        200,
+        50
+       ],
+       [
+        200,
+        0,
+        0
+       ],
+       [
+        0,
+        0,
+        0
+       ]
+      ],
+      "fx": 2,
+      "sx": 60,
+      "ix": 180,
+      "pal": 0,
+      "rev": false
+     },
+     {
+      "id": 1,
+      "stop": 0
+     },
+     {
+      "id": 2,
+      "stop": 0
+     },
+     {
+      "id": 3,
+      "stop": 0
+     },
+     {
+      "id": 4,
+      "stop": 0
+     },
+     {
+      "id": 5,
+      "stop": 0
+     },
+     {
+      "id": 6,
+      "stop": 0
+     },
+     {
+      "id": 7,
+      "stop": 0
+     },
+     {
+      "id": 8,
+      "stop": 0
+     },
+     {
+      "id": 9,
+      "stop": 0
+     },
+     {
+      "id": 10,
+      "stop": 0
+     },
+     {
+      "id": 11,
+      "stop": 0
+     },
+     {
+      "id": 12,
+      "stop": 0
+     },
+     {
+      "id": 13,
+      "stop": 0
+     },
+     {
+      "id": 14,
+      "stop": 0
+     }
+    ]
+   }
+  }
+ ]
+}
