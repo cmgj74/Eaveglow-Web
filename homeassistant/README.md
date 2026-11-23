@@ -26,6 +26,33 @@ preserved.
 The WLED address is `192.168.1.230`, set by `WLED_HOST` near the top of the
 script. `WLED_URL` overrides it for testing.
 
+## Christmas season
+
+From **Thanksgiving evening (4th Thursday of November) through 26 December**,
+the generator picks a random curated Christmas recipe instead of a normal mood:
+
+`christmas_classic`, `candy_cane`, `snowfall`, `tree_lights`, `gingerbread`,
+`silent_night`, `evergreen_glitter`, `santas_sleigh`.
+
+Each recipe keeps the family structure — apex twinkles, peaks sparkle, fronts
+drip or fall snow, sides chase or flow, garage stays calm — and still gives
+every segment its own palette and tint. Recipes prefer Eaveglow's custom ★
+palettes (Peppermint, Grinch, Candy Corn) where installed, falling back to
+built-in palettes otherwise. The 20–40 minute cadence and 23:00 cutoff are
+unchanged.
+
+Test the season boundaries without waiting for December:
+
+```
+python3 /config/scripts/wled_random_look.py --dry-run --date 2026-11-25   # normal
+python3 /config/scripts/wled_random_look.py --dry-run --date 2026-11-26   # Christmas
+python3 /config/scripts/wled_random_look.py --dry-run --force-christmas    # any date
+python3 /config/scripts/wled_random_look.py --dry-run --no-christmas       # force off
+```
+
+Run the Python tests from the repo root:
+`python3 -m unittest discover -s homeassistant/tests -v`
+
 ## Operating it
 
 - Dry run (prints the look, changes nothing):

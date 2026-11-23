@@ -15,6 +15,7 @@ These changes are part of the open PR #9 (not a separate PR). They make Eaveglow
 - Wild effects were removed from the coherent family keyword lists: `firework`, `scanner`, `juggle`, `blink`, `strobe`.
 - Faithful-mode effect lists were reordered so apex ≠ peak and front ≠ side.
 - Added `docs/home-assistant-coherent-look.md` describing the actual HA randomizer that drives the controller at sunset (20–40 minute random interval, stopping before the 23:00 WLED off timer).
+- From Thanksgiving evening through 26 December the HA generator picks a random curated Christmas recipe (8 recipes) using the same family/per-segment machinery, with `--date`, `--force-christmas` and `--no-christmas` flags for testing. Added `homeassistant/tests/test_wled_random_look.py` (8 tests).
 
 Earlier commits in the same PR add the WLED segment import/sync fixes, the coherent generator with seeds, the 👀 Test on lights button with one-click restore, and the top-of-page placement of that button.
 

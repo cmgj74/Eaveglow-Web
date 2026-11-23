@@ -2,9 +2,12 @@
 """Pick a new, tasteful look for the permanent lights at sunset.
 
 Port of Eaveglow's "coherent" look generator (src/engine/lookGenerator.ts):
-one palette for the whole house, a family-appropriate effect per zone type,
-and shared calm speed/intensity. Zone types come from the WLED segment
-labels (seg.n) that Eaveglow already wrote to the controller.
+one coordinated mood per look, a family-appropriate effect per zone type,
+and a different palette and tint for every segment. Zone types come from the
+WLED segment labels (seg.n) that Eaveglow already wrote to the controller.
+
+From Thanksgiving evening through 26 December the same machinery picks a
+curated Christmas recipe instead (see CHRISTMAS_RECIPES).
 
 Runs inside Home Assistant via shell_command. Python 3 stdlib only.
 """
@@ -18,6 +21,7 @@ import random
 import sys
 import urllib.error
 import urllib.request
+from datetime import date, timedelta
 
 # ---------------------------------------------------------------------------
 # Config
@@ -69,6 +73,112 @@ PALETTE_MOODS = {
     "nature": ("Forest", "Rivendell", "Landscape", "Aurora", "Aurora 2", "Cloud", "Orange & Teal"),
     "festive": ("C9", "C9 New", "Candy", "Pink Candy", "Sherbet", "Pastel", "Sunset 2", "Sakura"),
 }
+
+# Eaveglow installs these ★ palettes on the controller when a look uses them.
+# Stops copied from src/engine/library.json so colour-based effects match.
+CUSTOM_PALETTES: dict[str, list[list[int]]] = {
+    "Peppermint": [[255, 0, 0], [255, 0, 0], [255, 255, 255], [255, 255, 255], [255, 0, 0]],
+    "Grinch": [[0, 192, 0], [102, 255, 0], [255, 0, 0], [0, 192, 0]],
+    "Candy Corn": [[255, 255, 255], [255, 196, 0], [255, 106, 0], [255, 106, 0]],
+}
+PALETTE_STOPS = {**PALETTES, **CUSTOM_PALETTES}
+
+# Christmas recipes. Each picks one coordinated set of palettes; effects and
+# colours are per zone family, so peaks still sparkle, fronts still drip, etc.
+# The whole thing mirrors Eaveglow's `christmas` group in library.json.
+CHRISTMAS_RECIPES = [
+    {
+        "name": "christmas_classic",
+        "palettes": ["★ Grinch", "C9", "Forest", "Autumn"],
+        "effects": {
+            "apex": ("Twinklefox", "Sparkle", "Fairytwinkle"),
+            "peak": ("Sparkle", "Twinkle", "Colortwinkles"),
+            "front": ("Drip", "Rain", "Drip Drop"),
+            "side": ("Chase 2", "Colorwaves", "Railway"),
+            "garage": ("Solid", "Breathe", "Fade"),
+        },
+    },
+    {
+        "name": "candy_cane",
+        "palettes": ["★ Peppermint", "C9 New", "Sunset 2"],
+        "effects": {
+            "apex": ("Sparkle+", "Twinklefox", "Glitter"),
+            "peak": ("Sparkle", "Glitter", "Colortwinkles"),
+            "front": ("Colorwaves", "Rain", "Drip Drop"),
+            "side": ("Railway", "Theater", "Chase 2"),
+            "garage": ("Solid", "Fade", "Breathe"),
+        },
+        "colors": {"side": [[255, 40, 40], [255, 255, 255]], "front": [[255, 255, 255], [255, 90, 90]]},
+    },
+    {
+        "name": "snowfall",
+        "palettes": ["Cloud", "Breeze", "Ocean", "Semi Blue"],
+        "effects": {
+            "apex": ("Sparkle", "Glitter", "Twinklefox"),
+            "peak": ("Sparkle Dark", "Colortwinkles", "Twinkle"),
+            "front": ("Drip", "Drip Drop", "Rain"),
+            "side": ("Colorwaves", "Flow", "Aurora"),
+            "garage": ("Breathe", "Fade", "Solid"),
+        },
+        "colors": {"front": [[255, 255, 255], [200, 230, 255]], "side": [[190, 225, 255], [150, 200, 255]]},
+    },
+    {
+        "name": "tree_lights",
+        "palettes": ["C9 New", "★ Grinch", "C9", "Candy"],
+        "effects": {
+            "apex": ("Twinklefox", "Colortwinkles", "Sparkle"),
+            "peak": ("Twinklefox", "Twinkle", "Sparkle"),
+            "front": ("Colorwaves", "Chase 2", "Flow"),
+            "side": ("Chase 2", "Colorwaves", "Theater"),
+            "garage": ("Solid", "Breathe"),
+        },
+    },
+    {
+        "name": "gingerbread",
+        "palettes": ["Autumn", "Orangery", "Vintage"],
+        "effects": {
+            "apex": ("Twinklefox", "Glitter", "Sparkle"),
+            "peak": ("Twinklefox", "Twinkle", "Sparkle"),
+            "front": ("Breathe", "Colorwaves", "Fade"),
+            "side": ("Colorwaves", "Flow", "Breathe"),
+            "garage": ("Solid", "Breathe"),
+        },
+    },
+    {
+        "name": "silent_night",
+        "palettes": ["Breeze", "Cloud", "Semi Blue"],
+        "effects": {
+            "apex": ("Fairytwinkle", "Fairy", "Glitter"),
+            "peak": ("Twinkle", "Sparkle", "Colortwinkles"),
+            "front": ("Fade", "Breathe", "Colorwaves"),
+            "side": ("Aurora", "Stream", "Colorwaves"),
+            "garage": ("Solid", "Breathe", "Fade"),
+        },
+    },
+    {
+        "name": "evergreen_glitter",
+        "palettes": ["Forest", "Rivendell", "Landscape"],
+        "effects": {
+            "apex": ("Solid Glitter", "Glitter", "Sparkle"),
+            "peak": ("Glitter", "Sparkle", "Colortwinkles"),
+            "front": ("Colorwaves", "Flow", "Aurora"),
+            "side": ("Aurora", "Pacifica", "Colorwaves"),
+            "garage": ("Fade", "Breathe", "Solid"),
+        },
+    },
+    {
+        "name": "santas_sleigh",
+        "palettes": ["Sunset 2", "Sunset", "Orangery", "C9"],
+        "effects": {
+            "apex": ("Sparkle", "Twinklefox", "Glitter"),
+            "peak": ("Meteor Smooth", "Meteor", "Sparkle"),
+            "front": ("Rain", "Colorwaves", "Drip"),
+            "side": ("Chase 2", "Railway", "Theater"),
+            "garage": ("Breathe", "Solid"),
+        },
+        "colors": {"side": [[255, 30, 30], [255, 200, 60]], "front": [[255, 220, 180], [255, 120, 40]]},
+    },
+]
 
 
 # ---------------------------------------------------------------------------
@@ -150,6 +260,33 @@ def resolve_id(names: list[str], candidates) -> int | None:
     return None
 
 
+def resolve_palette(names: list[str], name: str) -> int | None:
+    """Resolve a palette name, with or without Eaveglow's ★ marker."""
+    plain = name[2:] if name.startswith("★ ") else name
+    for candidate in (name, plain):
+        idx = resolve_id(names, [candidate])
+        if idx is not None:
+            return idx
+    return None
+
+
+def stops_for(name: str) -> list[list[int]]:
+    """Approximate gradient stops for a built-in or ★ palette."""
+    plain = name[2:] if name.startswith("★ ") else name
+    return PALETTE_STOPS.get(plain, [[255, 170, 90], [255, 255, 255]])
+
+
+def thanksgiving(year: int) -> date:
+    """US Thanksgiving: fourth Thursday of November."""
+    first = date(year, 11, 1)
+    return first + timedelta(days=(3 - first.weekday()) % 7 + 21)
+
+
+def in_christmas_season(on_date: date) -> bool:
+    """Thanksgiving evening through 26 December, inclusive."""
+    return thanksgiving(on_date.year) <= on_date <= date(on_date.year, 12, 26)
+
+
 def blend_colors(family_colors: list[list[int]], palette_colors: list[list[int]]) -> list[list[int]]:
     """Keep a zone family's character while tinting it with the shared palette."""
     blended = []
@@ -190,55 +327,74 @@ def classify(segment_name: str) -> str:
     return "fallback"
 
 
-def build_look(state: dict, effects: list[str], palettes: list[str], rng: random.Random):
+def build_look(state: dict, effects: list[str], palettes: list[str], rng: random.Random,
+               christmas: bool = False):
     """Return (updates, description) without touching the controller."""
     segments = state.get("seg", [])
     if not segments:
         raise RuntimeError("WLED reported no segments; nothing to update.")
 
-    # One palette for the whole look, chosen from Eaveglow's calm built-ins
-    # that this controller actually has installed.
-    installed = [p for p in PALETTES if resolve_id(palettes, [p]) is not None]
+    # Eaveglow's calm built-ins that this controller actually has installed.
+    installed = [p for p in PALETTES if resolve_palette(palettes, p) is not None]
     if not installed:
         raise RuntimeError("None of the curated palettes are installed on this controller.")
 
-    # One coordinated mood per run, a different palette from it per group.
-    moods = [(name, m) for name, m in PALETTE_MOODS.items() if any(p in installed for p in m)]
-    if moods:
-        mood_name, mood = rng.choice(moods)
+    if christmas:
+        # Prefer a recipe whose palettes are installed; if none are, use the
+        # installed calm palettes rather than failing.
+        usable = [
+            (r, [p for p in r["palettes"] if resolve_palette(palettes, p) is not None])
+            for r in CHRISTMAS_RECIPES
+        ]
+        usable = [(r, p) for r, p in usable if p]
+        if usable:
+            recipe, scheme = rng.choice(usable)
+            scheme_name = recipe["name"]
+            defs: dict[str, dict] = {}
+            for name, base in FAMILIES.items():
+                d = dict(base)
+                if name in recipe.get("effects", {}):
+                    d["effects"] = recipe["effects"][name]
+                if name in recipe.get("colors", {}):
+                    d["colors"] = recipe["colors"][name]
+                defs[name] = d
+        else:
+            scheme, scheme_name, defs = installed, "christmas-fallback", FAMILIES
     else:
-        mood_name, mood = "mixed", tuple(installed)
-    mood_installed = [p for p in mood if p in installed]
+        moods = [(name, m) for name, m in PALETTE_MOODS.items() if any(p in installed for p in m)]
+        if moods:
+            mood_name, mood = rng.choice(moods)
+        else:
+            mood_name, mood = "mixed", tuple(installed)
+        scheme = [p for p in mood if p in installed]
+        scheme_name, defs = mood_name, FAMILIES
 
     groups: dict[str, list[int]] = {}
-    seg_family: dict[int, str] = {}
     for seg in segments:
         family = classify(seg.get("n", ""))
         groups.setdefault(family, []).append(seg.get("id", 0))
-        seg_family[seg.get("id", 0)] = family
 
-    family_order = sorted(groups, key=lambda k: FAMILIES[k]["priority"])
-    picks = rng.sample(mood_installed, min(len(mood_installed), len(family_order)))
+    family_order = sorted(groups, key=lambda k: defs[k]["priority"])
+    picks = rng.sample(scheme, min(len(scheme), len(family_order)))
     while len(picks) < len(family_order):
-        picks.append(rng.choice(mood_installed))
+        picks.append(rng.choice(scheme))
     family_palette_names = {family: name for family, name in zip(family_order, picks)}
 
-    # Within a family the effect stays uniform, but each segment gets its own
-    # palette and tint so individual peaks / soffits differ from each other.
+    # One effect per family, but a different palette and tint per segment.
     segment_palettes: dict[int, tuple[str, int]] = {}
     segment_colors: dict[int, list[list[int]]] = {}
     for family in family_order:
         base_name = family_palette_names[family]
-        choices = [base_name] + [p for p in mood_installed if p != base_name]
+        choices = [base_name] + [p for p in scheme if p != base_name]
         for n, seg_id in enumerate(groups[family]):
             name = choices[n % len(choices)]
-            segment_palettes[seg_id] = (name, resolve_id(palettes, [name]))
-            stops = [c for c in PALETTES[name] if any(v > 20 for v in c)][:2]
+            segment_palettes[seg_id] = (name, resolve_palette(palettes, name) or 0)
+            stops = [c for c in stops_for(name) if any(v > 20 for v in c)][:2]
             if not stops:
                 stops = [[255, 170, 90], [255, 255, 255]]
             accent = (stops + [[0, 0, 0], [0, 0, 0]])[:3]
             segment_colors[seg_id] = vary_color(
-                blend_colors(FAMILIES[family]["colors"], accent), n
+                blend_colors(defs[family]["colors"], accent), n
             )
 
     # Shared rhythm, kept deliberately gentle.
@@ -248,15 +404,12 @@ def build_look(state: dict, effects: list[str], palettes: list[str], rng: random
     used: set[int] = set()
     assigned: dict[int, int] = {}
     chosen: dict[str, str] = {}
-    for family in sorted(FAMILIES, key=lambda k: FAMILIES[k]["priority"]):
+    for family in sorted(defs, key=lambda k: defs[k]["priority"]):
         ids = groups.get(family)
         if not ids:
             continue
-        # Resolve every candidate this controller actually has, then choose
-        # one at random. Prefer an effect no other family used this run so
-        # each group looks visibly different from the others.
         available = []
-        for name in FAMILIES[family]["effects"]:
+        for name in defs[family]["effects"]:
             idx = resolve_id(effects, [name])
             if idx is not None:
                 available.append((idx, name))
@@ -288,8 +441,9 @@ def build_look(state: dict, effects: list[str], palettes: list[str], rng: random
         })
 
     varied = len({(s["pal"], tuple(tuple(c) for c in s["col"])) for s in updates})
+    label = "recipe" if christmas else "mood"
     summary = (
-        f"mood={mood_name} speed={speed} intensity={intensity} varied={varied} "
+        f"{label}={scheme_name} speed={speed} intensity={intensity} varied={varied} "
         + " ".join(f"{k}={v}/{family_palette_names[k]}" for k, v in chosen.items())
     )
     return updates, summary
@@ -307,7 +461,26 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true",
                         help="print the chosen look without sending it to WLED")
+    parser.add_argument("--force-christmas", action="store_true",
+                        help="use a Christmas recipe regardless of date (for testing)")
+    parser.add_argument("--no-christmas", action="store_true",
+                        help="use the normal mood generator regardless of date")
+    parser.add_argument("--date", metavar="YYYY-MM-DD",
+                        help="pretend it is this date (for testing)")
     args = parser.parse_args()
+
+    try:
+        on_date = date.fromisoformat(args.date) if args.date else date.today()
+    except ValueError:
+        print(f"ERROR: --date must be YYYY-MM-DD, got {args.date!r}", file=sys.stderr)
+        return 2
+    christmas = (
+        True if args.force_christmas
+        else False if args.no_christmas
+        else in_christmas_season(on_date)
+    )
+    if args.date or args.force_christmas or args.no_christmas:
+        print(f"Season: {'Christmas' if christmas else 'normal'} on {on_date}")
 
     try:
         state = get_json("/json")["state"]
@@ -319,11 +492,11 @@ def main() -> int:
 
     current = signature(state.get("seg", []))
     rng = random.Random()
-    updates, summary = build_look(state, effects, palettes, rng)
+    updates, summary = build_look(state, effects, palettes, rng, christmas)
     for _ in range(12):
         if signature(updates) != current:
             break
-        updates, summary = build_look(state, effects, palettes, rng)
+        updates, summary = build_look(state, effects, palettes, rng, christmas)
 
     if args.dry_run:
         print(f"DRY RUN: {summary}")

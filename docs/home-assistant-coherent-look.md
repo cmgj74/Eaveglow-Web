@@ -31,6 +31,20 @@ Each generated look follows Eaveglow's coherent rules:
   `col` are sent.
 - Re-rolls up to 12 times if it would repeat the current look.
 
+## Christmas season
+
+From **Thanksgiving evening through 26 December** the same machinery picks a
+random curated Christmas recipe instead of a normal mood — `christmas_classic`,
+`candy_cane`, `snowfall`, `tree_lights`, `gingerbread`, `silent_night`,
+`evergreen_glitter` or `santas_sleigh`. Each keeps the zone-family structure
+(apex twinkle, peak sparkle, front drip/snow, side chase/flow, garage calm)
+while giving every segment its own palette and tint. Custom ★ Christmas
+palettes are preferred when installed on the controller, with built-in
+fallbacks. Cadence (20–40 min) and the 23:00 cutoff are unchanged.
+
+Use `--date`, `--force-christmas` or `--no-christmas` with `--dry-run` to test
+either side of the window without changing the lights.
+
 ## Files (HA container paths)
 
 | File | Purpose |
