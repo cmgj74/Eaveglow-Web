@@ -472,17 +472,6 @@ def stops_for(name: str) -> list[list[int]]:
     return PALETTE_STOPS.get(plain, [[255, 170, 90], [255, 255, 255]])
 
 
-def thanksgiving(year: int) -> date:
-    """US Thanksgiving: fourth Thursday of November."""
-    first = date(year, 11, 1)
-    return first + timedelta(days=(3 - first.weekday()) % 7 + 21)
-
-
-def in_christmas_season(on_date: date) -> bool:
-    """Thanksgiving evening through 26 December, inclusive."""
-    return thanksgiving(on_date.year) <= on_date <= date(on_date.year, 12, 26)
-
-
 def blend_colors(family_colors: list[list[int]], palette_colors: list[list[int]]) -> list[list[int]]:
     """Keep a zone family's character while tinting it with the shared palette."""
     blended = []
@@ -688,18 +677,13 @@ def main() -> int:
     except ValueError:
         print(f"ERROR: --date must be YYYY-MM-DD, got {args.date!r}", file=sys.stderr)
         return 2
-    christmas = (
-        True if args.force_christmas
-        else False if args.no_christmas
-        else in_christmas_season(on_date)
-    )
+    christmas = args.force_christmas
     bundle = load_looks_file()
-    settings = None if christmas else load_settings()
+    settings = load_settings()
     hidden = set((settings or {}).get("hiddenLooks") or [])
     holiday = None
     if christmas:
-        # Christmas keeps its agreed Thanksgiving→26 Dec window regardless of
-        # the autopilot toggle; hidden looks still apply.
+        # Testing override: pick Christmas's looks even outside its season.
         group = next((h for h in (bundle or {}).get("holidays", []) if h["id"] == "christmas"), None)
         bundle_looks = (bundle or {}).get("looks") or []
         if not group and bundle_looks:
@@ -708,6 +692,7 @@ def main() -> int:
         if looks:
             holiday = {"id": "christmas", "looks": looks}
     elif not args.no_christmas:
+        # All holidays, Christmas included, follow Eaveglow's autopilot calendar.
         holiday = active_holiday(on_date, bundle, settings)
 
     if args.date or args.force_christmas or args.no_christmas or holiday:

@@ -29,9 +29,8 @@ script. `WLED_URL` overrides it for testing.
 
 ## All Eaveglow holidays
 
-From Thanksgiving evening through 26 December, Christmas keeps its special
-window. **Every other holiday follows Eaveglow's own autopilot schedule**: the
-season's `daysBefore`/`daysAfter` window from `/eaveglow.json`, its enabled
+**Every holiday, Christmas included, follows Eaveglow's autopilot calendar**
+from `/eaveglow.json`: each season's `daysBefore`/`daysAfter`, its enabled
 flag, and Eaveglow's overlap rule (special dates first, then the shortest
 season). If autopilot is off, or no holiday would be selected, the generator
 falls back to the normal mood look.
@@ -53,13 +52,29 @@ layout fingerprint: if you change your zones, regenerate the bundle or it
 automatically falls back to adapted styles. `christmas.json` is kept for older
 setups.
 
-Test the season boundaries without waiting for December:
+### Letting HA be the only automation
+
+Eaveglow's autopilot also writes WLED timers with dated season presets. If
+**Schedule** is on, WLED will apply those presets itself and fight with HA.
+To use Eaveglow only as the holiday calendar:
+
+1. Schedule page → turn **Automatic on & off** ON, turn **Seasonal autopilot** ON, **Save**
+2. Turn **Automatic on & off** OFF again, **Save**
+
+The seasons stay in `/eaveglow.json`, but WLED's timers are switched off, so
+only HA changes the look. Check with:
 
 ```
-python3 /config/scripts/wled_random_look.py --dry-run --date 2026-11-25   # normal
-python3 /config/scripts/wled_random_look.py --dry-run --date 2026-11-26   # Christmas
-python3 /config/scripts/wled_random_look.py --dry-run --force-christmas    # any date
-python3 /config/scripts/wled_random_look.py --dry-run --no-christmas       # force off
+python3 -c "import json,urllib.request; s=json.load(urllib.request.urlopen('http://192.168.1.230/eaveglow.json')); print('schedule',s['schedule']['enabled'],'autopilot',s['autopilot']['enabled'])"
+```
+
+Test the season calendar without waiting for the holiday:
+
+```
+python3 /config/scripts/wled_random_look.py --dry-run --date 2026-10-25   # Halloween
+python3 /config/scripts/wled_random_look.py --dry-run --date 2026-11-30   # Christmas
+python3 /config/scripts/wled_random_look.py --dry-run --force-christmas    # testing override
+python3 /config/scripts/wled_random_look.py --dry-run --no-christmas       # normal look
 ```
 
 Install the bundle on HA alongside the script:

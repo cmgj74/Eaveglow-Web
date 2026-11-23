@@ -28,20 +28,6 @@ STATE = {
 }
 
 
-class SeasonTests(unittest.TestCase):
-    def test_thanksgiving_is_fourth_thursday(self):
-        self.assertEqual(w.thanksgiving(2025), date(2025, 11, 27))
-        self.assertEqual(w.thanksgiving(2026), date(2026, 11, 26))
-        self.assertEqual(w.thanksgiving(2027), date(2027, 11, 25))
-
-    def test_window_starts_thanksgiving_and_ends_dec_26(self):
-        self.assertFalse(w.in_christmas_season(date(2026, 11, 25)))
-        self.assertTrue(w.in_christmas_season(date(2026, 11, 26)))
-        self.assertTrue(w.in_christmas_season(date(2026, 12, 25)))
-        self.assertTrue(w.in_christmas_season(date(2026, 12, 26)))
-        self.assertFalse(w.in_christmas_season(date(2026, 12, 27)))
-
-
 class BuildLookTests(unittest.TestCase):
     def test_christmas_mode_picks_a_curated_recipe(self):
         updates, summary = w.build_look(STATE, EFFECTS, PALETTES, random.Random(1), True)
@@ -154,6 +140,13 @@ class HolidayScheduleTests(unittest.TestCase):
         self.assertEqual(w.holiday_date("nth:11:4:4", 2026), date(2026, 11, 26))
         self.assertEqual(w.holiday_date("dates:2026-11-08,2027-10-29", 2026), date(2026, 11, 8))
         self.assertIsNone(w.holiday_date("dates:2027-10-29", 2026))
+
+    def test_christmas_follows_the_autopilot_season(self):
+        self.assertEqual(
+            w.active_holiday(date(2026, 11, 30), self.bundle, self.settings())["id"],
+            "christmas",
+        )
+        self.assertIsNone(w.active_holiday(date(2026, 11, 10), self.bundle, self.settings()))
 
     def test_shorter_season_wins_on_overlap(self):
         holiday = w.active_holiday(date(2026, 11, 20), self.bundle, self.settings())

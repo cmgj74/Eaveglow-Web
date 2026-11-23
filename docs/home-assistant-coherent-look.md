@@ -33,13 +33,17 @@ Each generated look follows Eaveglow's coherent rules:
 
 ## Holidays
 
-From Thanksgiving evening through 26 December, Christmas keeps its special
-window. **All other holidays follow Eaveglow's autopilot schedule** from
-`/eaveglow.json`: each season's `daysBefore`/`daysAfter`, its enabled flag, and
-Eaveglow's overlap rule (special dates first, then the shorter season wins).
-If autopilot is off, or no holiday is selected, the script falls back to the
-normal mood look. A holiday whose looks are all in `hiddenLooks` is skipped;
-if only some are hidden, the rest are used.
+**Every holiday, Christmas included, follows Eaveglow's autopilot calendar**
+from `/eaveglow.json`: each season's `daysBefore`/`daysAfter`, its enabled
+flag, and Eaveglow's overlap rule (special dates first, then the shorter
+season wins). If autopilot is off, or no holiday is selected, the script falls
+back to the normal mood look. A holiday whose looks are all in `hiddenLooks`
+is skipped; if only some are hidden, the rest are used.
+
+To keep HA as the only automation, leave Eaveglow's Schedule off while its
+Autopilot stays on — otherwise WLED's dated season presets will apply looks
+at on-times and fight with HA. `--force-christmas` is a testing override that
+ignores the calendar.
 
 Eaveglow's 14 holidays and their looks are bundled in
 `homeassistant/looks/holidays.json`, generated from `src/engine/library.json`
