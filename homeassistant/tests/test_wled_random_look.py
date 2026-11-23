@@ -92,12 +92,15 @@ class ManifestTests(unittest.TestCase):
         if self.bundle is None:
             self.skipTest("homeassistant/looks/christmas.json has not been generated")
 
-    def test_manifest_covers_the_real_christmas_looks(self):
-        looks = self.bundle["looks"]
-        self.assertGreaterEqual(len(looks), 20)
-        for entry in looks:
-            self.assertTrue(entry.get("effect"))
-            self.assertTrue(entry.get("payload", {}).get("seg"))
+    def test_manifest_covers_all_eaveglow_holidays(self):
+        holidays = self.bundle["holidays"]
+        self.assertEqual(len(holidays), 14)
+        for holiday in holidays:
+            self.assertTrue(holiday.get("rule"))
+            self.assertTrue(holiday["looks"])
+            for entry in holiday["looks"]:
+                self.assertTrue(entry.get("effect"))
+                self.assertTrue(entry.get("payload", {}).get("seg"))
 
     def test_look_recipe_maps_effect_to_the_right_family(self):
         recipe = w.recipe_from_look({
@@ -115,12 +118,67 @@ class ManifestTests(unittest.TestCase):
         changed = [dict(s) for s in segs]
         changed[0] = {**changed[0], "start": 999}
         self.assertFalse(w.bundle_matches_layout(self.bundle, changed))
-        self.assertIsNotNone(w.look_payload(self.bundle["looks"][0]))
+        first_look = self.bundle["holidays"][0]["looks"][0]
+        self.assertIsNotNone(w.look_payload(first_look))
 
     def test_adapt_mode_uses_eaveglow_look_ids(self):
-        recipes = [w.recipe_from_look(e) for e in self.bundle["looks"]]
+        looks = [l for h in self.bundle["holidays"] for l in h["looks"]]
+        recipes = [w.recipe_from_look(e) for e in looks]
         _, summary = w.build_look(STATE, EFFECTS, PALETTES, random.Random(4), True, recipes)
         self.assertTrue(summary.startswith("recipe=builtin."), summary)
+
+
+class HolidayScheduleTests(unittest.TestCase):
+    def setUp(self):
+        self.bundle = w.load_looks_file()
+        if self.bundle is None:
+            self.skipTest("holiday look bundle has not been generated")
+        self.seasons = [
+            {"holidayId": hid, "daysBefore": before, "daysAfter": after,
+             "enabled": True, "lookIds": []}
+            for hid, before, after in [
+                ("valentines", 7, 0), ("easter", 7, 0), ("july_4th", 7, 1),
+                ("halloween", 30, 0), ("thanksgiving", 7, 0), ("christmas", 30, 7),
+            ]
+        ]
+
+    def settings(self, hidden=None):
+        return {"autopilot": {"enabled": True, "seasons": self.seasons, "dates": []},
+                "hiddenLooks": hidden or []}
+
+    def test_eaveglow_date_rules(self):
+        self.assertEqual(w.holiday_date("fixed:7-4", 2026), date(2026, 7, 4))
+        self.assertEqual(w.holiday_date("easter:0", 2026), date(2026, 4, 5))
+        self.assertEqual(w.holiday_date("easter:-47", 2026), date(2026, 2, 17))
+        self.assertEqual(w.holiday_date("last:5:1", 2026), date(2026, 5, 25))
+        self.assertEqual(w.holiday_date("nth:11:4:4", 2026), date(2026, 11, 26))
+        self.assertEqual(w.holiday_date("dates:2026-11-08,2027-10-29", 2026), date(2026, 11, 8))
+        self.assertIsNone(w.holiday_date("dates:2027-10-29", 2026))
+
+    def test_shorter_season_wins_on_overlap(self):
+        holiday = w.active_holiday(date(2026, 11, 20), self.bundle, self.settings())
+        self.assertEqual(holiday["id"], "thanksgiving")
+
+    def test_no_holiday_returns_none(self):
+        self.assertIsNone(w.active_holiday(date(2026, 9, 1), self.bundle, self.settings()))
+
+    def test_autopilot_off_returns_none(self):
+        settings = {"autopilot": {"enabled": False, "seasons": self.seasons}}
+        self.assertIsNone(w.active_holiday(date(2026, 10, 25), self.bundle, settings))
+
+    def test_all_hidden_looks_skip_the_holiday(self):
+        halloween = next(h for h in self.bundle["holidays"] if h["id"] == "halloween")
+        hidden = [look["id"] for look in halloween["looks"]]
+        self.assertIsNone(
+            w.active_holiday(date(2026, 10, 25), self.bundle, self.settings(hidden))
+        )
+
+    def test_some_hidden_looks_keep_the_holiday(self):
+        halloween = next(h for h in self.bundle["holidays"] if h["id"] == "halloween")
+        hidden = [halloween["looks"][0]["id"]]
+        holiday = w.active_holiday(date(2026, 10, 25), self.bundle, self.settings(hidden))
+        self.assertEqual(holiday["id"], "halloween")
+        self.assertEqual(len(holiday["looks"]), len(halloween["looks"]) - 1)
 
 
 if __name__ == "__main__":

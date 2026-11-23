@@ -27,20 +27,31 @@ preserved.
 The WLED address is `192.168.1.230`, set by `WLED_HOST` near the top of the
 script. `WLED_URL` overrides it for testing.
 
-## Christmas season
+## All Eaveglow holidays
 
-From **Thanksgiving evening (4th Thursday of November) through 26 December**,
-the generator picks a random curated Christmas recipe instead of a normal mood:
+From Thanksgiving evening through 26 December, Christmas keeps its special
+window. **Every other holiday follows Eaveglow's own autopilot schedule**: the
+season's `daysBefore`/`daysAfter` window from `/eaveglow.json`, its enabled
+flag, and Eaveglow's overlap rule (special dates first, then the shortest
+season). If autopilot is off, or no holiday would be selected, the generator
+falls back to the normal mood look.
 
-`christmas_classic`, `candy_cane`, `snowfall`, `tree_lights`, `gingerbread`,
-`silent_night`, `evergreen_glitter`, `santas_sleigh`.
+If **all** of a holiday's looks are in Eaveglow's `hiddenLooks`, that holiday
+is skipped entirely. If only some are hidden, the rest are used.
 
-Each recipe keeps the family structure — apex twinkles, peaks sparkle, fronts
-drip or fall snow, sides chase or flow, garage stays calm — and still gives
-every segment its own palette and tint. Recipes prefer Eaveglow's custom ★
-palettes (Peppermint, Grinch, Candy Corn) where installed, falling back to
-built-in palettes otherwise. The 20–40 minute cadence and 23:00 cutoff are
-unchanged.
+`looks/holidays.json` is generated from Eaveglow's `library.json` by
+`node_modules/.bin/vite-node scripts/export-christmas-looks.ts`. It contains
+all 14 holidays' looks in two forms:
+
+- **Adapted style** — effect, palette and colours mapped onto the current zone
+  families (`--adapt-only`)
+- **Exact look** — the WLED state Eaveglow compiles for that look against your
+  segment layout (`--exact-only`)
+
+By default the script alternates the two. Exact payloads are guarded by a
+layout fingerprint: if you change your zones, regenerate the bundle or it
+automatically falls back to adapted styles. `christmas.json` is kept for older
+setups.
 
 Test the season boundaries without waiting for December:
 
@@ -51,25 +62,10 @@ python3 /config/scripts/wled_random_look.py --dry-run --force-christmas    # any
 python3 /config/scripts/wled_random_look.py --dry-run --no-christmas       # force off
 ```
 
-### Using Eaveglow's real Christmas looks (A + B)
-
-`looks/christmas.json` is generated from Eaveglow's `src/engine/library.json`
-by `node_modules/.bin/vite-node scripts/export-christmas-looks.ts`. It contains
-all 28 Christmas looks in two forms:
-
-- **Adapted style** — effect, palette and colours, mapped onto the current zone
-  families by the generator (`--adapt-only`)
-- **Exact look** — the WLED state Eaveglow compiles for that look against your
-  segment layout, posted verbatim (`--exact-only`)
-
-By default Christmas mode alternates the two at random. Exact mode is guarded
-by a layout fingerprint: if you change your zones, regenerate the bundle or it
-automatically falls back to adapted styles.
-
 Install the bundle on HA alongside the script:
 
 ```
-cp -R ~/Documents/Git/Eaveglow-Web/homeassistant/looks /config/looks/
+cp -R ~/Documents/Git/Eaveglow-Web/homeassistant/looks /Volumes/config/looks/
 ```
 
 Run the Python tests from the repo root:

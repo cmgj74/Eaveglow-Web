@@ -31,28 +31,23 @@ Each generated look follows Eaveglow's coherent rules:
   `col` are sent.
 - Re-rolls up to 12 times if it would repeat the current look.
 
-## Christmas season
+## Holidays
 
-From **Thanksgiving evening through 26 December** the same machinery picks a
-random curated Christmas recipe instead of a normal mood — `christmas_classic`,
-`candy_cane`, `snowfall`, `tree_lights`, `gingerbread`, `silent_night`,
-`evergreen_glitter` or `santas_sleigh`. Each keeps the zone-family structure
-(apex twinkle, peak sparkle, front drip/snow, side chase/flow, garage calm)
-while giving every segment its own palette and tint. Custom ★ Christmas
-palettes are preferred when installed on the controller, with built-in
-fallbacks. Cadence (20–40 min) and the 23:00 cutoff are unchanged.
+From Thanksgiving evening through 26 December, Christmas keeps its special
+window. **All other holidays follow Eaveglow's autopilot schedule** from
+`/eaveglow.json`: each season's `daysBefore`/`daysAfter`, its enabled flag, and
+Eaveglow's overlap rule (special dates first, then the shorter season wins).
+If autopilot is off, or no holiday is selected, the script falls back to the
+normal mood look. A holiday whose looks are all in `hiddenLooks` is skipped;
+if only some are hidden, the rest are used.
 
-Use `--date`, `--force-christmas` or `--no-christmas` with `--dry-run` to test
-either side of the window without changing the lights.
-
-Eaveglow's 28 real Christmas looks are bundled in `homeassistant/looks/christmas.json`,
-generated from `src/engine/library.json` by
-`node_modules/.bin/vite-node scripts/export-christmas-looks.ts`. The HA script
-uses them two ways: it either adapts a look's effect/colours to the zone
-families (`--adapt-only`) or posts the exact compiled WLED state for that look
-against your current segment layout (`--exact-only`). By default it alternates
-the two. Exact payloads are guarded by a layout fingerprint — regenerate the
-bundle after changing zones.
+Eaveglow's 14 holidays and their looks are bundled in
+`homeassistant/looks/holidays.json`, generated from `src/engine/library.json`
+by `node_modules/.bin/vite-node scripts/export-christmas-looks.ts`. The HA
+script either adapts a look's effect/colours to the zone families
+(`--adapt-only`) or posts the exact compiled WLED state (`--exact-only`),
+alternating by default. Exact payloads are guarded by a layout fingerprint —
+regenerate the bundle after changing zones.
 
 ## Files (HA container paths)
 
