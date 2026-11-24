@@ -19,10 +19,20 @@ the exact `shell_commands.yaml` line and `automations.yaml` block using the
 controller's real address — copy them into HA and restart. After that, nothing
 else needs manual updating: changing a look in Eaveglow changes HA's next look.
 
-The shell command is a bootstrap:
+The shell command is a bootstrap. It also appends a timestamped record to
+`/config/eaveglow_runs.log` on every run: a UTC timestamp, the SHA-256 of the
+downloaded generator, and its output — a definitive record of which version
+ran and what it applied:
 
 ```yaml
-wled_random_look: "curl -fsSL http://<controller>/eaveglow-ha.py -o /tmp/eaveglow-ha.py && WLED_URL=http://<controller> python3 /tmp/eaveglow-ha.py"
+wled_random_look: "curl -fsSL http://<controller>/eaveglow-ha.py -o /tmp/eaveglow-ha.py && printf '%s sha=%s ' $(date -u +%FT%TZ) $(sha256sum /tmp/eaveglow-ha.py | awk '{print $1}') >> /config/eaveglow_runs.log && WLED_URL=http://<controller> python3 /tmp/eaveglow-ha.py | tee -a /config/eaveglow_runs.log"
+```
+
+Example record (holiday runs print a `Season:` line before `Applied`):
+
+```
+2026-11-24T13:40:00Z sha=a2de2a85cfe109e6f00f26a91ff1d983bf432a4d7241d76a0e51f93cd64f5cd1 Season: thanksgiving on 2026-11-24
+Applied new look: recipe=builtin.tg_leaves [adapt]
 ```
 
 ## What is read live each run

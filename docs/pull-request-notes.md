@@ -22,6 +22,7 @@ These changes are part of the open PR #9 (not a separate PR). They make Eaveglow
 - Eaveglow's custom **★ palettes** are resolved live from `/paletteN.json` (WLED ids count down from 200). If a selected look needs a ★ palette that isn't installed, HA uploads its definition from the live library into the first free slot before applying. Dry runs only scan. Verified with `★ Peppermint` (id 189) and by installing `★ Candy Corn` on the controller.
 - The Python `compileLook` port is golden-tested against the TypeScript compiler (`homeassistant/tests/fixtures_compiled.json`); 16 Python tests cover date rules, season selection, hidden looks, palette resolution/install and exact compilation.
 - To keep HA as the only automation, Eaveglow's Schedule should be off while Autopilot stays on; otherwise WLED's dated season presets apply looks at on-times and compete with HA. Documented in `homeassistant/README.md`.
+- Every HA run appends a timestamp, the downloaded script's SHA-256, and the applied look to `/config/eaveglow_runs.log`, so the exact generator version behind any night's looks is auditable. The generated shell command on the Install to HA page includes this.
 
 Earlier commits in the same PR add the WLED segment import/sync fixes, the coherent generator with seeds, the 👀 Test on lights button with one-click restore, and the top-of-page placement of that button.
 

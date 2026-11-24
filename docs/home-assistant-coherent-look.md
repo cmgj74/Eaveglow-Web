@@ -70,7 +70,7 @@ and automation.
 
 | HA file | Purpose |
 | --- | --- |
-| `/config/shell_commands.yaml` | `wled_random_look:` bootstrap (downloads and runs `/eaveglow-ha.py`) |
+| `/config/shell_commands.yaml` | `wled_random_look:` bootstrap (downloads and runs `/eaveglow-ha.py`, logs timestamp + SHA-256 to `/eaveglow_runs.log`) — **restart HA after changing this file** |
 | `/config/automations.yaml` | `wled_sunset_random_look` automation |
 
 The generator itself lives on the controller (`/eaveglow-ha.py`), not in HA —

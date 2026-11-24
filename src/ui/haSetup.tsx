@@ -4,7 +4,7 @@ import { Header } from './common';
 export function HaSetupPage() {
   const host = location.host || 'wled-dig-octa-32-8l';
   const shell =
-    `wled_random_look: "curl -fsSL http://${host}/eaveglow-ha.py -o /tmp/eaveglow-ha.py && WLED_URL=http://${host} python3 /tmp/eaveglow-ha.py"`;
+    `wled_random_look: "curl -fsSL http://${host}/eaveglow-ha.py -o /tmp/eaveglow-ha.py && printf '%s sha=%s ' $(date -u +%FT%TZ) $(sha256sum /tmp/eaveglow-ha.py | awk '{print $1}') >> /config/eaveglow_runs.log && WLED_URL=http://${host} python3 /tmp/eaveglow-ha.py | tee -a /config/eaveglow_runs.log"`;
   const automation = `- id: wled_sunset_random_look
   alias: "WLED - Random look every 20-40 min until 23:00"
   trigger:
