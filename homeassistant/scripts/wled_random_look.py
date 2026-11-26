@@ -959,6 +959,69 @@ def build_look(state: dict, effects: list[str], palettes: list[str], rng: random
     return updates, summary
 
 
+def saved_layout_segments(settings: dict | None) -> list[dict]:
+    """Rebuild Eaveglow's saved segment layout (House → Send segments to WLED)."""
+    layout = (settings or {}).get("layout") or {}
+    zones = layout.get("zones") or []
+    spacing = layout.get("spacing") or {}
+    lit = int(spacing.get("lit", 1) or 1)
+    skip = int(spacing.get("skip", 0) or 0)
+    segs: list[dict] = []
+    for i, zone in enumerate(zones):
+        try:
+            start = int(zone["start"])
+            length = int(zone["length"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        segs.append({
+            "id": i, "start": start, "stop": start + length,
+            "grp": lit, "spc": skip, "on": True, "bri": 255,
+            "col": [], "fx": 0, "sx": 128, "ix": 128, "pal": 0,
+            "rev": bool(zone.get("reversed")),
+            "n": zone.get("name") or f"Zone {i + 1}",
+        })
+    return segs
+
+
+def layout_signature(segments: list[dict]) -> tuple:
+    """Geometry only — names, reverse flags, effects and colors are not layout.
+
+    Comparing names would rewrite WLED every run (the user may rename segments
+    in WLED's own UI) and comparing rev would fight intentionally reversed
+    strips. A collapsed layout is a geometry change, so geometry is the trigger.
+    """
+    return tuple(
+        (s.get("id"), s.get("start"), s.get("stop"), s.get("grp"), s.get("spc"))
+        for s in segments
+    )
+
+
+def ensure_saved_layout(settings: dict | None, snapshot: dict, dry_run: bool = False) -> dict:
+    """Restore Eaveglow's saved segments when WLED's layout drifted (e.g. a
+    preset with no seg collapsed it to one). Returns the snapshot to compile
+    against — the live one, or one with saved segments substituted for a dry run."""
+    saved = saved_layout_segments(settings)
+    if not saved:
+        return snapshot
+    live = (snapshot.get("state") or {}).get("seg") or []
+    if layout_signature(saved) == layout_signature(live):
+        return snapshot
+    print(f"Layout: restoring {len(saved)} saved segments (WLED had {len(live)})")
+    if dry_run:
+        restored = json.loads(json.dumps(snapshot))
+        restored["state"]["seg"] = saved
+        return restored
+    current_state = snapshot.get("state") or {}
+    post_json("/json/state", {
+        "on": bool(current_state.get("on")),
+        "bri": current_state.get("bri", 255),
+        "transition": 0,
+        "mainseg": 0,
+        "seg": saved,
+    })
+    return get_json("/json") or snapshot
+
+
 def signature(segments: list[dict]) -> tuple:
     """(palettes, effects) pair, used to avoid picking the same look twice."""
     return (
@@ -1020,6 +1083,12 @@ def main() -> int:
         fxdata = get_json("/json/fxdata")
     except (urllib.error.URLError, OSError, ValueError):
         fxdata = []  # older WLED builds have no effect metadata
+
+    # A preset with no `seg` (e.g. WLED's On/Off timers) can collapse the
+    # layout to one segment. Restore Eaveglow's saved zones before compiling,
+    # so every look — including exact mode — starts from the correct segments.
+    snapshot = ensure_saved_layout(settings, snapshot or {}, dry_run=args.dry_run)
+    state = snapshot["state"]
 
     segments = state.get("seg", [])
     total = max((s.get("stop", 0) for s in segments), default=0)

@@ -168,6 +168,49 @@ class AdaptedModeTests(unittest.TestCase):
                 original_scan, original_read, original_upload)
             w.CUSTOM_PALETTE_IDS = {}
 
+    def test_saved_layout_segments(self):
+        settings = {"layout": {
+            "totalPixels": 12, "spacing": {"lit": 2, "skip": 1},
+            "zones": [
+                {"id": "a", "name": "Front", "start": 0, "length": 5},
+                {"id": "b", "name": "Apex", "start": 5, "length": 1, "reversed": True},
+            ],
+        }}
+        segs = w.saved_layout_segments(settings)
+        self.assertEqual(len(segs), 2)
+        self.assertEqual(segs[0], {
+            "id": 0, "start": 0, "stop": 5, "grp": 2, "spc": 1, "on": True,
+            "bri": 255, "col": [], "fx": 0, "sx": 128, "ix": 128, "pal": 0,
+            "rev": False, "n": "Front",
+        })
+        self.assertEqual((segs[1]["start"], segs[1]["stop"], segs[1]["rev"]), (5, 6, True))
+
+    def test_layout_signature_ignores_names_reverse_and_effects(self):
+        a = [{"id": 0, "start": 0, "stop": 5, "grp": 1, "spc": 0,
+              "rev": False, "n": "Front", "fx": 3}]
+        b = [{"id": 0, "start": 0, "stop": 5, "grp": 1, "spc": 0,
+              "rev": True, "n": "Renamed in WLED", "fx": 9}]
+        self.assertEqual(w.layout_signature(a), w.layout_signature(b))
+        b[0]["stop"] = 6
+        self.assertNotEqual(w.layout_signature(a), w.layout_signature(b))
+
+    def test_ensure_saved_layout_dry_run_substitutes_segments(self):
+        settings = {"layout": {"zones": [{"name": "Front", "start": 0, "length": 5}],
+                               "spacing": {"lit": 1, "skip": 0}}}
+        snapshot = {"state": {"on": True, "seg": [{"id": 0, "start": 0, "stop": 5, "n": None}]},
+                    "info": {}}
+        out = w.ensure_saved_layout(settings, snapshot, dry_run=True)
+        self.assertEqual(out["state"]["seg"][0]["n"], "Front")
+        self.assertEqual(len(snapshot["state"]["seg"]), 1)  # original untouched
+
+    def test_ensure_saved_layout_noop_when_geometry_matches(self):
+        settings = {"layout": {"zones": [{"name": "Front", "start": 0, "length": 5}],
+                               "spacing": {"lit": 1, "skip": 0}}}
+        snapshot = {"state": {"on": True, "seg": [{"id": 0, "start": 0, "stop": 5,
+                                                   "grp": 1, "spc": 0, "rev": True,
+                                                   "n": "Different name"}]}, "info": {}}
+        self.assertIs(w.ensure_saved_layout(settings, snapshot, dry_run=True), snapshot)
+
     def test_playback_settings(self):
         bri, tr = w.playback_settings({"bri": 88}, {"transition": 12})
         self.assertEqual((bri, tr), (88, 12))

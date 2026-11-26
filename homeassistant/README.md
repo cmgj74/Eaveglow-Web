@@ -39,7 +39,7 @@ Applied new look: recipe=builtin.tg_leaves [adapt]
 
 - `/json` — segments (names/ranges), effects, palettes, brightness, `maxseg`
 - `/json/fxdata` — effect metadata (optional)
-- `/eaveglow.json` — autopilot seasons, special dates, hidden looks, transition
+- `/eaveglow.json` — autopilot seasons, special dates, hidden looks, transition, and the saved House segment layout (`layout.zones`) used to repair drifted segments before each look
 - `/eaveglow-library.json` — look definitions, holiday date rules, palette stops
 
 **Custom palettes:** Eaveglow's ★ palettes live on the controller as

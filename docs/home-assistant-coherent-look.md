@@ -41,6 +41,21 @@ installed, HA uploads the palette definition from `/eaveglow-library.json` into
 the first free slot before applying the look — no manual palette copying. Dry
 runs only scan; they never install.
 
+## Segment layout self-repair
+
+A WLED preset or timer with no `seg` payload (for example the built-in On/Off
+presets) can collapse the controller to a single unnamed segment. Eaveglow's
+saved House layout is the source of truth: on every run, before compiling a
+look, the generator compares WLED's live segment **geometry** (count, start,
+stop, grouping) to `layout.zones` in `/eaveglow.json`. If they differ, it
+reposts the saved segments — with their names — and compiles against them.
+
+Names and reverse flags edited in WLED are **not** treated as drift, so the
+generator won't fight manual WLED edits on every cycle. Exact looks still
+merge runs into fewer segments by design; the next run repairs the layout
+again. Dry runs report the repair without writing; real repairs appear in
+`/eaveglow_runs.log` as `Layout: restoring N saved segments (WLED had M)`.
+
 ## Holidays
 
 **Every holiday, Christmas included, follows Eaveglow's autopilot calendar**
