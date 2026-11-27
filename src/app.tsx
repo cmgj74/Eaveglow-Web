@@ -154,6 +154,14 @@ export function App() {
 
   const saveSchedule = useCallback(
     async (schedule: Schedule, autopilot: Autopilot | undefined, resave = true) => {
+      // With Schedule off, autopilot is only a calendar for HA. Saving it must
+      // never rewrite WLED timers — that is what removes the on/off pair.
+      if (!schedule.enabled) {
+        store.update('schedule', schedule);
+        if (autopilot) store.update('autopilot', { ...autopilot, syncedDates: undefined });
+        void refresh();
+        return { errors: [], warnings: [] };
+      }
       const plan = autopilot?.enabled && schedule.enabled ? seasonPeriods(autopilot, holidayGroups) : undefined;
       const looks = [...builtinLooks, ...store.settings.customLooks];
       // A deleted custom look falls back to the everyday look.

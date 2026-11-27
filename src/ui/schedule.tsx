@@ -101,9 +101,9 @@ export function SchedulePage() {
       if (!backup) client.readFile(TIMERS_BACKUP).then((b) => Array.isArray(b?.timers) && setBackup(b), () => undefined);
       const lookName = (id: string) => looks.find((l) => l.id === id)?.name ?? id;
       setResult([
-        schedule.enabled ? 'Your lights will now turn on and off by themselves, even when no phone is around.' : "Your lights won't switch automatically.",
-        ...(autoOn ? ['🗓 Autopilot looks:', ...periods.map((p) => `${p.emoji} ${p.label}, ${describeMonthDay(p.start)} – ${describeMonthDay(p.end)}: ${p.lookIds.map(lookName).join(', ')}`)] : []),
-        'Any timers that were set up in WLED before were replaced.',
+        schedule.enabled ? 'Your lights will now turn on and off by themselves, even when no phone is around.' : "Your lights won't switch automatically. Calendar edits were saved without changing WLED timers.",
+        ...(autoOn && schedule.enabled ? ['🗓 Autopilot looks:', ...periods.map((p) => `${p.emoji} ${p.label}, ${describeMonthDay(p.start)} – ${describeMonthDay(p.end)}: ${p.lookIds.map(lookName).join(', ')}`)] : []),
+        ...(schedule.enabled ? ['Any timers that were set up in WLED before were replaced.'] : []),
         ...r.warnings,
       ]);
     } catch (e) {
@@ -307,11 +307,11 @@ function AutopilotCard(props: { autopilot: Autopilot; onChange: (a: Autopilot) =
   };
 
   return (
-    <section class={'card autopilot' + (props.scheduleOn ? '' : ' dim')}>
-      <fieldset disabled={!props.scheduleOn}>
+    <section class="card autopilot">
+      <fieldset>
         <Toggle
           label={<b>🗓 Seasonal autopilot</b>}
-          hint={props.scheduleOn ? 'Picks the look by date at Time 1\'s "on" time.' : 'Turn on Automatic on & off to use autopilot.'}
+          hint={props.scheduleOn ? 'Picks the look by date at Time 1\'s "on" time.' : 'The holiday calendar Home Assistant reads to pick looks.'}
           checked={auto.enabled}
           onChange={(enabled) => props.onChange({ ...auto, enabled })}
         />
