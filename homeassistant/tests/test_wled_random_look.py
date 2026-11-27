@@ -211,6 +211,14 @@ class AdaptedModeTests(unittest.TestCase):
                                                    "n": "Different name"}]}, "info": {}}
         self.assertIs(w.ensure_saved_layout(settings, snapshot, dry_run=True), snapshot)
 
+    def test_festive_looks_skips_warm_christmas(self):
+        entries = [{"id": lid, "name": lid} for lid in w.WARM_LOOK_IDS]
+        entries += [{"id": "builtin.candy_cane", "name": "Candy Cane"}]
+        kept = w.festive_looks(entries, "christmas")
+        self.assertEqual([e["id"] for e in kept], ["builtin.candy_cane"])
+        self.assertEqual(w.festive_looks(entries, "thanksgiving"), entries)
+        self.assertEqual(w.festive_looks([], "christmas"), [])
+
     def test_playback_settings(self):
         bri, tr = w.playback_settings({"bri": 88}, {"transition": 12})
         self.assertEqual((bri, tr), (88, 12))

@@ -283,6 +283,24 @@ def season_range(rule: str, before: int, after: int, today: date) -> tuple[date,
     return None
 
 
+WARM_LOOK_IDS = {
+    "builtin.twinkle_stars", "builtin.silent_night", "builtin.santas_sleigh",
+    "builtin.evergreen", "builtin.xm_reindeer", "builtin.xm_tree_farm",
+    "builtin.christmas_warm", "builtin.christmas_gold", "builtin.gingerbread",
+}
+
+
+def festive_looks(looks: list[dict], holiday_id: str) -> list[dict]:
+    """HA's Christmas rotation stays red/green/white. Eight built-in Christmas
+    looks are warm amber/orange by design (Gingerbread, Twinkle Stars, etc.);
+    exact mode would reproduce them literally and read as Thanksgiving. Eaveglow
+    keeps all 28 looks — only this automation skips the warm ones."""
+    if holiday_id != "christmas":
+        return looks
+    kept = [e for e in looks if e.get("id") not in WARM_LOOK_IDS]
+    return kept or looks
+
+
 def usable_looks(holiday: dict | None, hidden: set[str]) -> list[dict]:
     looks = (holiday or {}).get("looks", [])
     return [l for l in looks if l.get("id") not in hidden]
@@ -343,6 +361,7 @@ def active_holiday(on_date: date, holidays: list[dict], settings: dict | None) -
     for _, holiday, window in sorted(ranges, key=lambda r: r[0]):
         if window[0] <= on_date <= window[1]:
             looks = usable_looks(holiday, hidden)
+            looks = festive_looks(looks, holiday["id"])
             if looks:
                 return {"id": holiday["id"], "looks": looks}
     return None
@@ -364,7 +383,7 @@ def families_for_effect(effect: str) -> set[str]:
 # Palette preferences per holiday, used when a look's own palette isn't
 # installed on the controller (custom ★ palettes often aren't).
 HOLIDAY_PALETTES = {
-    "christmas": ("C9", "C9 New", "Candy", "Vintage", "Sakura", "Autumn", "Sunset 2"),
+    "christmas": ("C9", "C9 New", "Candy", "Sakura", "Jul", "★ Peppermint", "★ Evergreen & Gold", "★ Winter Wonderland", "★ North Pole"),
     "halloween": ("Orangery", "Autumn", "Vintage", "C9", "Sakura"),
     "thanksgiving": ("Autumn", "Vintage", "Orangery", "Sunset"),
     "easter": ("Pastel", "Sakura", "Sherbet", "Candy"),
@@ -393,11 +412,17 @@ def recipe_from_look(entry: dict, installed: set[str] | None = None, holiday: st
     # When the holiday has on-theme palettes, use only those — otherwise the
     # random sample would mostly pick generic calm palettes like Ocean/Beach.
     palettes = ordered if ordered else list(available)[:8]
+    # A look's `colors` are its own base (e.g. Twinkle Stars' warm orange).
+    # In adapted holiday mode the *palette* should drive color — copying one
+    # look's warm white onto every zone family makes Christmas look like
+    # Thanksgiving. Use each family's neutral base; build_look() blends the
+    # seasonal palette accent into it.
+    colors = {f: base["colors"] for f, base in FAMILIES.items()}
     return {
         "name": entry.get("id", "eaveglow"),
         "palettes": palettes,
         "effects": effects,
-        "colors": {f: entry.get("colors") or base["colors"] for f, base in FAMILIES.items()},
+        "colors": colors,
     }
 
 
@@ -1062,6 +1087,7 @@ def main() -> int:
         # Testing override: pick Christmas's looks even outside its season.
         group = next((h for h in holidays if h["id"] == "christmas"), None)
         looks = usable_looks(group, hidden)
+        looks = festive_looks(looks, "christmas")
         if looks:
             holiday = {"id": "christmas", "looks": looks}
     elif not args.no_christmas:
