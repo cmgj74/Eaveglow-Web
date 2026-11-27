@@ -8,6 +8,23 @@ import { WledClient } from './engine/wledClient';
 export const SETTINGS_FILE = '/eaveglow.json';
 const LOCAL_KEY = 'eaveglow.settings';
 
+export interface HaSettings {
+  /** Address HA uses to download the generator (use the controller's IP). */
+  controllerUrl?: string;
+  minMinutes?: number;
+  maxMinutes?: number;
+  cutoffHour?: number;
+  cutoffMinute?: number;
+  /** 'random' (default), 'exact', or 'adapted'. CLI flags still override. */
+  mode?: 'random' | 'exact' | 'adapted';
+  speedMin?: number;
+  speedMax?: number;
+  intensityMin?: number;
+  intensityMax?: number;
+  /** Allow the warm/amber Christmas looks in HA's rotation. */
+  warmLooks?: boolean;
+}
+
 export interface Settings {
   version: 1;
   layout?: HouseLayout;
@@ -28,6 +45,8 @@ export interface Settings {
   props?: Prop[];
   /** Seasonal autopilot (looks by date); unset until first opened. */
   autopilot?: Autopilot;
+  /** Home Assistant integration knobs, read live by the HA generator. */
+  ha?: HaSettings;
 }
 
 type Key = keyof Omit<Settings, 'version'>;

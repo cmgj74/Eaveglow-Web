@@ -219,6 +219,17 @@ class AdaptedModeTests(unittest.TestCase):
         self.assertEqual(w.festive_looks(entries, "thanksgiving"), entries)
         self.assertEqual(w.festive_looks([], "christmas"), [])
 
+    def test_ha_settings_mode_and_ranges(self):
+        state = {"seg": [{"id": 0, "start": 0, "stop": 50, "n": "Front", "col": [[255, 255, 255], [0, 0, 0], [0, 0, 0]]}]}
+        updates, summary = w.build_look(state, EFFECTS, PALETTES, random.Random(1),
+                                        False, None, (200, 200), (222, 222))
+        self.assertIn("speed=200", summary)
+        self.assertIn("intensity=222", summary)
+        self.assertTrue(all(190 <= s["sx"] <= 210 and 212 <= s["ix"] <= 232 for s in updates))
+        self.assertEqual(w.festive_looks(
+            [{"id": "builtin.gingerbread"}], "christmas", allow_warm=True),
+            [{"id": "builtin.gingerbread"}])
+
     def test_playback_settings(self):
         bri, tr = w.playback_settings({"bri": 88}, {"transition": 12})
         self.assertEqual((bri, tr), (88, 12))

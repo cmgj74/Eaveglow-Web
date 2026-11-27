@@ -290,12 +290,12 @@ WARM_LOOK_IDS = {
 }
 
 
-def festive_looks(looks: list[dict], holiday_id: str) -> list[dict]:
+def festive_looks(looks: list[dict], holiday_id: str, allow_warm: bool = False) -> list[dict]:
     """HA's Christmas rotation stays red/green/white. Eight built-in Christmas
     looks are warm amber/orange by design (Gingerbread, Twinkle Stars, etc.);
     exact mode would reproduce them literally and read as Thanksgiving. Eaveglow
     keeps all 28 looks — only this automation skips the warm ones."""
-    if holiday_id != "christmas":
+    if holiday_id != "christmas" or allow_warm:
         return looks
     kept = [e for e in looks if e.get("id") not in WARM_LOOK_IDS]
     return kept or looks
@@ -313,6 +313,8 @@ def active_holiday(on_date: date, holidays: list[dict], settings: dict | None) -
     Eaveglow's autopilot. A holiday whose looks are all ignored is skipped.
     """
     autopilot = (settings or {}).get("autopilot") or {}
+    ha = (settings or {}).get("ha") or {}
+    allow_warm = bool(ha.get("warmLooks"))
     hidden = set((settings or {}).get("hiddenLooks") or [])
     by_id = {h["id"]: h for h in holidays}
     if not autopilot.get("enabled"):
@@ -361,7 +363,7 @@ def active_holiday(on_date: date, holidays: list[dict], settings: dict | None) -
     for _, holiday, window in sorted(ranges, key=lambda r: r[0]):
         if window[0] <= on_date <= window[1]:
             looks = usable_looks(holiday, hidden)
-            looks = festive_looks(looks, holiday["id"])
+            looks = festive_looks(looks, holiday["id"], allow_warm)
             if looks:
                 return {"id": holiday["id"], "looks": looks}
     return None
@@ -859,7 +861,9 @@ def classify(segment_name: str) -> str:
 
 
 def build_look(state: dict, effects: list[str], palettes: list[str], rng: random.Random,
-               christmas: bool = False, recipes: list[dict] | None = None):
+               christmas: bool = False, recipes: list[dict] | None = None,
+               speed_range: tuple[int, int] = (75, 110),
+               intensity_range: tuple[int, int] = (120, 160)):
     """Return (updates, description) without touching the controller."""
     segments = state.get("seg", [])
     if not segments:
@@ -933,8 +937,8 @@ def build_look(state: dict, effects: list[str], palettes: list[str], rng: random
             )
 
     # Shared rhythm, kept deliberately gentle.
-    speed = rng.randint(75, 110)
-    intensity = rng.randint(120, 160)
+    speed = rng.randint(speed_range[0], speed_range[1])
+    intensity = rng.randint(intensity_range[0], intensity_range[1])
 
     used: set[int] = set()
     assigned: dict[int, int] = {}
@@ -1087,7 +1091,7 @@ def main() -> int:
         # Testing override: pick Christmas's looks even outside its season.
         group = next((h for h in holidays if h["id"] == "christmas"), None)
         looks = usable_looks(group, hidden)
-        looks = festive_looks(looks, "christmas")
+        looks = festive_looks(looks, "christmas", bool(((settings or {}).get("ha") or {}).get("warmLooks")))
         if looks:
             holiday = {"id": "christmas", "looks": looks}
     elif not args.no_christmas:
@@ -1133,11 +1137,14 @@ def main() -> int:
     ensure_custom_palettes(wanted, library, snapshot.get("info") or {}, install=not args.dry_run)
     exact = [e for e in entries if (e.get("look") or {}).get("layers")]
     mode = "adapt"
+    ha = (settings or {}).get("ha") or {}
     if exact:
         if args.exact_only:
             mode = "exact"
         elif args.adapt_only:
             mode = "adapt"
+        elif ha.get("mode") in ("exact", "adapted"):
+            mode = "exact" if ha["mode"] == "exact" else "adapt"
         else:
             mode = rng.choice(("exact", "adapt"))
 
@@ -1155,16 +1162,24 @@ def main() -> int:
                 break
         summary = f"exact={entry['name']} (Eaveglow look)"
     else:
-        installed_palettes = set(palettes or []) | set(CUSTOM_PALETTE_IDS)
+        fx_list = effects or []
+        pal_list = palettes or []
+        installed_palettes = set(pal_list) | set(CUSTOM_PALETTE_IDS)
         recipes = [
             recipe_from_look(e, installed_palettes, holiday["id"] if holiday else "")
             for e in entries if e.get("effect")
         ] if entries else None
-        updates, summary = build_look(state, effects, palettes, rng, bool(entries), recipes)
+        speed_range = (int(ha.get("speedMin", 75)), int(ha.get("speedMax", 110)))
+        intensity_range = (int(ha.get("intensityMin", 120)), int(ha.get("intensityMax", 160)))
+        speed_range = (max(1, speed_range[0]), max(speed_range[0], speed_range[1]))
+        intensity_range = (max(1, intensity_range[0]), max(intensity_range[0], intensity_range[1]))
+        updates, summary = build_look(state, fx_list, pal_list, rng, bool(entries), recipes,
+                                      speed_range, intensity_range)
         for _ in range(12):
             if signature(updates) != current:
                 break
-            updates, summary = build_look(state, effects, palettes, rng, bool(entries), recipes)
+            updates, summary = build_look(state, fx_list, pal_list, rng, bool(entries), recipes,
+                                          speed_range, intensity_range)
         payload = {"on": True, "bri": brightness, "transition": transition, "seg": updates}
 
     if args.dry_run:
